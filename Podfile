@@ -8,6 +8,7 @@ target 'FirebaseITGS' do
   # Pods for FirebaseITGS
   pod 'FirebaseCore', '~> 9.2.0'
   pod 'Firebase/Auth', '~> 9.2.0'
+  
 
 
 
