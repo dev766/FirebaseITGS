@@ -8,7 +8,10 @@ target 'FirebaseITGS' do
   # Pods for FirebaseITGS
   pod 'FirebaseCore', '~> 9.2.0'
   pod 'Firebase/Auth', '~> 9.2.0'
-  
+  pod 'Firebase/Messaging', '~> 9.2.0'
+  pod 'Firebase/Database', '~> 9.2.0'
+  pod 'Firebase/Storage', '~> 9.2.0'
+  pod 'Firebase/InAppMessaging', '~> 9.2.0'
 
 
 

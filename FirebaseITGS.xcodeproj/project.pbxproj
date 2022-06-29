@@ -3,10 +3,15 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1888A416286C3DBD00AF6841 /* ConversationListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1888A415286C3DBD00AF6841 /* ConversationListViewModel.swift */; };
+		18E74629286B27C00002F39A /* FirebaseServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E74628286B27C00002F39A /* FirebaseServices.swift */; };
+		18E7462B286B2BDD0002F39A /* Generic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E7462A286B2BDD0002F39A /* Generic.swift */; };
+		18E7462F286B2E690002F39A /* CryptLib.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E7462E286B2E690002F39A /* CryptLib.m */; };
+		18E74631286B30B40002F39A /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E74630286B30B40002F39A /* Util.swift */; };
 		18E9D9DF286AD00C007E4884 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E9D9DE286AD00C007E4884 /* AppDelegate.swift */; };
 		18E9D9E1286AD00C007E4884 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E9D9E0286AD00C007E4884 /* SceneDelegate.swift */; };
 		18E9D9E3286AD00C007E4884 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E9D9E2286AD00C007E4884 /* ViewController.swift */; };
@@ -18,6 +23,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1888A415286C3DBD00AF6841 /* ConversationListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListViewModel.swift; sourceTree = "<group>"; };
+		18E74628286B27C00002F39A /* FirebaseServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseServices.swift; sourceTree = "<group>"; };
+		18E7462A286B2BDD0002F39A /* Generic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Generic.swift; sourceTree = "<group>"; };
+		18E7462C286B2E660002F39A /* Objc_Bridge_Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Objc_Bridge_Header.h; sourceTree = "<group>"; };
+		18E7462D286B2E680002F39A /* CryptLib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CryptLib.h; sourceTree = "<group>"; };
+		18E7462E286B2E690002F39A /* CryptLib.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CryptLib.m; sourceTree = "<group>"; };
+		18E74630286B30B40002F39A /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		18E9D9DB286AD00C007E4884 /* FirebaseITGS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FirebaseITGS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		18E9D9DE286AD00C007E4884 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		18E9D9E0286AD00C007E4884 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -44,6 +56,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1888A414286C3D7600AF6841 /* View Model */ = {
+			isa = PBXGroup;
+			children = (
+				1888A415286C3DBD00AF6841 /* ConversationListViewModel.swift */,
+			);
+			path = "View Model";
+			sourceTree = "<group>";
+		};
 		18E9D9D2286AD00C007E4884 = {
 			isa = PBXGroup;
 			children = (
@@ -65,6 +85,9 @@
 		18E9D9DD286AD00C007E4884 /* FirebaseITGS */ = {
 			isa = PBXGroup;
 			children = (
+				1888A414286C3D7600AF6841 /* View Model */,
+				18E7462D286B2E680002F39A /* CryptLib.h */,
+				18E7462E286B2E690002F39A /* CryptLib.m */,
 				18E9D9DE286AD00C007E4884 /* AppDelegate.swift */,
 				18E9D9E0286AD00C007E4884 /* SceneDelegate.swift */,
 				18E9D9E2286AD00C007E4884 /* ViewController.swift */,
@@ -73,6 +96,10 @@
 				18E9D9E9286AD00E007E4884 /* LaunchScreen.storyboard */,
 				18E9D9EC286AD00E007E4884 /* Info.plist */,
 				18E9D9F2286AEAF8007E4884 /* GoogleService-Info.plist */,
+				18E74628286B27C00002F39A /* FirebaseServices.swift */,
+				18E7462A286B2BDD0002F39A /* Generic.swift */,
+				18E7462C286B2E660002F39A /* Objc_Bridge_Header.h */,
+				18E74630286B30B40002F39A /* Util.swift */,
 			);
 			path = FirebaseITGS;
 			sourceTree = "<group>";
@@ -127,11 +154,12 @@
 				TargetAttributes = {
 					18E9D9DA286AD00C007E4884 = {
 						CreatedOnToolsVersion = 13.3;
+						LastSwiftMigration = 1250;
 					};
 				};
 			};
 			buildConfigurationList = 18E9D9D6286AD00C007E4884 /* Build configuration list for PBXProject "FirebaseITGS" */;
-			compatibilityVersion = "Xcode 13.0";
+			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -209,8 +237,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18E7462F286B2E690002F39A /* CryptLib.m in Sources */,
+				18E7462B286B2BDD0002F39A /* Generic.swift in Sources */,
 				18E9D9E3286AD00C007E4884 /* ViewController.swift in Sources */,
 				18E9D9DF286AD00C007E4884 /* AppDelegate.swift in Sources */,
+				18E74631286B30B40002F39A /* Util.swift in Sources */,
+				1888A416286C3DBD00AF6841 /* ConversationListViewModel.swift in Sources */,
+				18E74629286B27C00002F39A /* FirebaseServices.swift in Sources */,
 				18E9D9E1286AD00C007E4884 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -287,7 +320,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -341,7 +374,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -357,6 +390,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -375,6 +409,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ITGurusSoftware.FirebaseITGS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = FirebaseITGS/Objc_Bridge_Header.h;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -386,6 +422,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -404,6 +441,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ITGurusSoftware.FirebaseITGS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = FirebaseITGS/Objc_Bridge_Header.h;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
