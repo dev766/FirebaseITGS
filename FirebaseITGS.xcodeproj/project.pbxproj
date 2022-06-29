@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		185BCE3B286C7F6800B1803C /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185BCE3A286C7F6800B1803C /* HomeViewController.swift */; };
+		185BCE3D286C7F7900B1803C /* HomeListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185BCE3C286C7F7900B1803C /* HomeListTableViewCell.swift */; };
 		1888A416286C3DBD00AF6841 /* ConversationListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1888A415286C3DBD00AF6841 /* ConversationListViewModel.swift */; };
 		18E74629286B27C00002F39A /* FirebaseServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E74628286B27C00002F39A /* FirebaseServices.swift */; };
 		18E7462B286B2BDD0002F39A /* Generic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E7462A286B2BDD0002F39A /* Generic.swift */; };
@@ -23,6 +25,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		185BCE3A286C7F6800B1803C /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		185BCE3C286C7F7900B1803C /* HomeListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeListTableViewCell.swift; sourceTree = "<group>"; };
 		1888A415286C3DBD00AF6841 /* ConversationListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListViewModel.swift; sourceTree = "<group>"; };
 		18E74628286B27C00002F39A /* FirebaseServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseServices.swift; sourceTree = "<group>"; };
 		18E7462A286B2BDD0002F39A /* Generic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Generic.swift; sourceTree = "<group>"; };
@@ -91,6 +95,8 @@
 				18E9D9DE286AD00C007E4884 /* AppDelegate.swift */,
 				18E9D9E0286AD00C007E4884 /* SceneDelegate.swift */,
 				18E9D9E2286AD00C007E4884 /* ViewController.swift */,
+				185BCE3A286C7F6800B1803C /* HomeViewController.swift */,
+				185BCE3C286C7F7900B1803C /* HomeListTableViewCell.swift */,
 				18E9D9E4286AD00C007E4884 /* Main.storyboard */,
 				18E9D9E7286AD00E007E4884 /* Assets.xcassets */,
 				18E9D9E9286AD00E007E4884 /* LaunchScreen.storyboard */,
@@ -242,8 +248,10 @@
 				18E9D9E3286AD00C007E4884 /* ViewController.swift in Sources */,
 				18E9D9DF286AD00C007E4884 /* AppDelegate.swift in Sources */,
 				18E74631286B30B40002F39A /* Util.swift in Sources */,
+				185BCE3B286C7F6800B1803C /* HomeViewController.swift in Sources */,
 				1888A416286C3DBD00AF6841 /* ConversationListViewModel.swift in Sources */,
 				18E74629286B27C00002F39A /* FirebaseServices.swift in Sources */,
+				185BCE3D286C7F7900B1803C /* HomeListTableViewCell.swift in Sources */,
 				18E9D9E1286AD00C007E4884 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
