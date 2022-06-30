@@ -30,16 +30,16 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="T4m-di-Jka">
-                                                    <rect key="frame" x="100" y="30" width="59" height="49"/>
+                                                    <rect key="frame" x="100" y="30" width="207" height="49"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zof-fq-r0v">
-                                                            <rect key="frame" x="0.0" y="0.0" width="59" height="19.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="207" height="19.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UQ8-UU-suB">
-                                                            <rect key="frame" x="0.0" y="29.5" width="59" height="19.5"/>
+                                                            <rect key="frame" x="0.0" y="29.5" width="207" height="19.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -47,7 +47,7 @@
                                                     </subviews>
                                                 </stackView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Io0-hH-TFY">
-                                                    <rect key="frame" x="371" y="30" width="33" height="16"/>
+                                                    <rect key="frame" x="362.5" y="30" width="41.5" height="16"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -87,7 +87,9 @@
                                                 <constraint firstItem="Io0-hH-TFY" firstAttribute="top" secondItem="udX-sw-F9q" secondAttribute="top" constant="30" id="JBH-rG-piw"/>
                                                 <constraint firstItem="T4m-di-Jka" firstAttribute="leading" secondItem="WLu-xz-emY" secondAttribute="trailing" constant="10" id="MXI-l0-nqs"/>
                                                 <constraint firstAttribute="bottom" secondItem="WLu-xz-emY" secondAttribute="bottom" constant="20" id="NVr-nH-fgs"/>
+                                                <constraint firstItem="T4m-di-Jka" firstAttribute="width" secondItem="udX-sw-F9q" secondAttribute="width" multiplier="0.5" id="ULI-9L-xa4"/>
                                                 <constraint firstItem="WLu-xz-emY" firstAttribute="top" secondItem="udX-sw-F9q" secondAttribute="top" constant="20" id="aVW-1m-OKw"/>
+                                                <constraint firstItem="Io0-hH-TFY" firstAttribute="width" secondItem="udX-sw-F9q" secondAttribute="width" multiplier="0.1" id="bXb-dT-ajK"/>
                                                 <constraint firstAttribute="trailing" secondItem="Io0-hH-TFY" secondAttribute="trailing" constant="10" id="df5-Cz-ZNY"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -130,10 +132,13 @@
                             <imageReference key="image" image="line.3.horizontal" catalog="system" symbolScale="default"/>
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
-                                <action selector="moreOptionsAction:" destination="BYZ-38-t0r" id="ph2-5M-DZf"/>
+                                <action selector="moreButtonAction:" destination="BYZ-38-t0r" id="bMe-cd-sDs"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="tableview" destination="9Z1-wu-OKn" id="HoU-QN-Bia"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -178,4 +183,3 @@
         </systemColor>
     </resources>
 </document>
-
