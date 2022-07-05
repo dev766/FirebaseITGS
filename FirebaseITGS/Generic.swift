@@ -10,17 +10,17 @@ import Foundation
 
 // MARK:- Extensions
 extension String {
-    func dateFromMilliseconds(format:String) -> Date? {
-        let date : NSDate! = NSDate(timeIntervalSince1970:Double(self)! / 1000.0)
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd hh:mm:ss a"
-        dateFormatter.timeZone = TimeZone.current
-        let timeStamp = dateFormatter.string(from: date as Date)
-        
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd hh:mm:ss a"
-        return (formatter.date(from: timeStamp))
-    }
+//    func dateFromMilliseconds(format:String) -> Date? {
+//        let date : NSDate! = NSDate(timeIntervalSince1970:Double(self)! / 1000.0)
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.dateFormat = "yyyy-MM-dd hh:mm:ss a"
+//        dateFormatter.timeZone = TimeZone.current
+//        let timeStamp = dateFormatter.string(from: date as Date)
+//
+//        let formatter = DateFormatter()
+//        formatter.dateFormat = "yyyy-MM-dd hh:mm:ss a"
+//        return (formatter.date(from: timeStamp))
+//    }
     
     func encryptMessage() -> String? {
         let key = Util.shared.getEncryptionKey()
@@ -200,5 +200,11 @@ class ChatConversation: NSObject {
         self.message_key = message_key
     }
 }
+enum imageType : String {
+    case BadgeImage = "1"
+    case UserImage
+    case noImage
+}
+
 
 

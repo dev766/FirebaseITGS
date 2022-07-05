@@ -7,16 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1836DBB62872CE9300F12D08 /* ChatConversationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1836DBB42872CE9300F12D08 /* ChatConversationTableViewCell.swift */; };
+		1836DBB72872CE9300F12D08 /* ChatConversationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1836DBB52872CE9300F12D08 /* ChatConversationTableViewCell.xib */; };
 		185BCE3B286C7F6800B1803C /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185BCE3A286C7F6800B1803C /* HomeViewController.swift */; };
 		185BCE3D286C7F7900B1803C /* HomeListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185BCE3C286C7F7900B1803C /* HomeListTableViewCell.swift */; };
 		1888A416286C3DBD00AF6841 /* ConversationListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1888A415286C3DBD00AF6841 /* ConversationListViewModel.swift */; };
+		18BEA550287415A000CBEA33 /* ContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BEA54F287415A000CBEA33 /* ContainerView.swift */; };
+		18BEA5532874162B00CBEA33 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BEA5522874162B00CBEA33 /* Extensions.swift */; };
+		18BEA5552874189700CBEA33 /* DateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BEA5542874189700CBEA33 /* DateHelper.swift */; };
 		18E74629286B27C00002F39A /* FirebaseServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E74628286B27C00002F39A /* FirebaseServices.swift */; };
 		18E7462B286B2BDD0002F39A /* Generic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E7462A286B2BDD0002F39A /* Generic.swift */; };
 		18E7462F286B2E690002F39A /* CryptLib.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E7462E286B2E690002F39A /* CryptLib.m */; };
 		18E74631286B30B40002F39A /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E74630286B30B40002F39A /* Util.swift */; };
 		18E9D9DF286AD00C007E4884 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E9D9DE286AD00C007E4884 /* AppDelegate.swift */; };
 		18E9D9E1286AD00C007E4884 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E9D9E0286AD00C007E4884 /* SceneDelegate.swift */; };
-		18E9D9E3286AD00C007E4884 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E9D9E2286AD00C007E4884 /* ViewController.swift */; };
 		18E9D9E6286AD00C007E4884 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18E9D9E4286AD00C007E4884 /* Main.storyboard */; };
 		18E9D9E8286AD00E007E4884 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18E9D9E7286AD00E007E4884 /* Assets.xcassets */; };
 		18E9D9EB286AD00E007E4884 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18E9D9E9286AD00E007E4884 /* LaunchScreen.storyboard */; };
@@ -25,9 +29,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1836DBB42872CE9300F12D08 /* ChatConversationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatConversationTableViewCell.swift; sourceTree = "<group>"; };
+		1836DBB52872CE9300F12D08 /* ChatConversationTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatConversationTableViewCell.xib; sourceTree = "<group>"; };
 		185BCE3A286C7F6800B1803C /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		185BCE3C286C7F7900B1803C /* HomeListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeListTableViewCell.swift; sourceTree = "<group>"; };
 		1888A415286C3DBD00AF6841 /* ConversationListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListViewModel.swift; sourceTree = "<group>"; };
+		18BEA54F287415A000CBEA33 /* ContainerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerView.swift; sourceTree = "<group>"; };
+		18BEA5522874162B00CBEA33 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		18BEA5542874189700CBEA33 /* DateHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateHelper.swift; sourceTree = "<group>"; };
 		18E74628286B27C00002F39A /* FirebaseServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseServices.swift; sourceTree = "<group>"; };
 		18E7462A286B2BDD0002F39A /* Generic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Generic.swift; sourceTree = "<group>"; };
 		18E7462C286B2E660002F39A /* Objc_Bridge_Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Objc_Bridge_Header.h; sourceTree = "<group>"; };
@@ -37,7 +46,6 @@
 		18E9D9DB286AD00C007E4884 /* FirebaseITGS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FirebaseITGS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		18E9D9DE286AD00C007E4884 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		18E9D9E0286AD00C007E4884 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		18E9D9E2286AD00C007E4884 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		18E9D9E5286AD00C007E4884 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		18E9D9E7286AD00E007E4884 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		18E9D9EA286AD00E007E4884 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -68,6 +76,22 @@
 			path = "View Model";
 			sourceTree = "<group>";
 		};
+		18BEA54E287415A000CBEA33 /* IBDesinable */ = {
+			isa = PBXGroup;
+			children = (
+				18BEA54F287415A000CBEA33 /* ContainerView.swift */,
+			);
+			path = IBDesinable;
+			sourceTree = "<group>";
+		};
+		18BEA5512874162B00CBEA33 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				18BEA5522874162B00CBEA33 /* Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		18E9D9D2286AD00C007E4884 = {
 			isa = PBXGroup;
 			children = (
@@ -94,16 +118,20 @@
 				18E7462E286B2E690002F39A /* CryptLib.m */,
 				18E9D9DE286AD00C007E4884 /* AppDelegate.swift */,
 				18E9D9E0286AD00C007E4884 /* SceneDelegate.swift */,
-				18E9D9E2286AD00C007E4884 /* ViewController.swift */,
 				185BCE3A286C7F6800B1803C /* HomeViewController.swift */,
 				185BCE3C286C7F7900B1803C /* HomeListTableViewCell.swift */,
 				18E9D9E4286AD00C007E4884 /* Main.storyboard */,
+				1836DBB42872CE9300F12D08 /* ChatConversationTableViewCell.swift */,
+				1836DBB52872CE9300F12D08 /* ChatConversationTableViewCell.xib */,
 				18E9D9E7286AD00E007E4884 /* Assets.xcassets */,
 				18E9D9E9286AD00E007E4884 /* LaunchScreen.storyboard */,
 				18E9D9EC286AD00E007E4884 /* Info.plist */,
 				18E9D9F2286AEAF8007E4884 /* GoogleService-Info.plist */,
+				18BEA5512874162B00CBEA33 /* Extensions */,
+				18BEA54E287415A000CBEA33 /* IBDesinable */,
 				18E74628286B27C00002F39A /* FirebaseServices.swift */,
 				18E7462A286B2BDD0002F39A /* Generic.swift */,
+				18BEA5542874189700CBEA33 /* DateHelper.swift */,
 				18E7462C286B2E660002F39A /* Objc_Bridge_Header.h */,
 				18E74630286B30B40002F39A /* Util.swift */,
 			);
@@ -189,6 +217,7 @@
 			files = (
 				18E9D9EB286AD00E007E4884 /* LaunchScreen.storyboard in Resources */,
 				18E9D9E8286AD00E007E4884 /* Assets.xcassets in Resources */,
+				1836DBB72872CE9300F12D08 /* ChatConversationTableViewCell.xib in Resources */,
 				18E9D9F3286AEAF8007E4884 /* GoogleService-Info.plist in Resources */,
 				18E9D9E6286AD00C007E4884 /* Main.storyboard in Resources */,
 			);
@@ -245,11 +274,14 @@
 			files = (
 				18E7462F286B2E690002F39A /* CryptLib.m in Sources */,
 				18E7462B286B2BDD0002F39A /* Generic.swift in Sources */,
-				18E9D9E3286AD00C007E4884 /* ViewController.swift in Sources */,
 				18E9D9DF286AD00C007E4884 /* AppDelegate.swift in Sources */,
 				18E74631286B30B40002F39A /* Util.swift in Sources */,
+				18BEA5552874189700CBEA33 /* DateHelper.swift in Sources */,
 				185BCE3B286C7F6800B1803C /* HomeViewController.swift in Sources */,
 				1888A416286C3DBD00AF6841 /* ConversationListViewModel.swift in Sources */,
+				1836DBB62872CE9300F12D08 /* ChatConversationTableViewCell.swift in Sources */,
+				18BEA5532874162B00CBEA33 /* Extensions.swift in Sources */,
+				18BEA550287415A000CBEA33 /* ContainerView.swift in Sources */,
 				18E74629286B27C00002F39A /* FirebaseServices.swift in Sources */,
 				185BCE3D286C7F7900B1803C /* HomeListTableViewCell.swift in Sources */,
 				18E9D9E1286AD00C007E4884 /* SceneDelegate.swift in Sources */,

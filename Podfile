@@ -12,6 +12,8 @@ target 'FirebaseITGS' do
   pod 'Firebase/Database', '~> 9.2.0'
   pod 'Firebase/Storage', '~> 9.2.0'
   pod 'Firebase/InAppMessaging', '~> 9.2.0'
+  pod 'IQKeyboardManager'
+  pod 'InitialsImageView'
 
 
 
