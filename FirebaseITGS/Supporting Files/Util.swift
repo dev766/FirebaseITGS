@@ -162,3 +162,23 @@ enum SVGEnum:NSString {
     case markAsRead = "markAsRead"
 }
 
+enum chatOptionsType: String {
+    case addPeople
+    case markFavorite
+    case mute
+    case markUnread
+    case archive
+    case report
+    case removePeople
+    case renameConversation
+    case notificationSetting
+    case leave
+    case allActivity
+    case onlyMentions
+    case muteNotifications
+    case addNewTask
+    case showCompletedTask
+    case deleteTasksInBulk
+    case markCompletedInBulk
+}
+

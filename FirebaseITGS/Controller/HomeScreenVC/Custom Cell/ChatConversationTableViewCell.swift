@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import InitialsImageView
 
 class ChatConversationTableViewCell: UITableViewCell {
     

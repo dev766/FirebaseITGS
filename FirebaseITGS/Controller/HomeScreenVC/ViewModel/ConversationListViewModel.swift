@@ -250,4 +250,63 @@ class ChatConversationListViewModel {
         return conversation
     }
     
+    func addGroupChatOptions(isFavourite:Bool?,isArchive:Bool?, isRead:Bool?, completion:@escaping ([ChatOptionTypeModel]) -> Void){
+         var optionArray = [ChatOptionTypeModel]()
+         
+         optionArray.append(ChatOptionTypeModel(optionImage: "Add-people", optionName:"Add people", cellType: .addPeople))
+         optionArray.append(ChatOptionTypeModel(optionImage: "RemovePeopleFromChat", optionName:"Remove People", cellType: .removePeople))
+         optionArray.append(ChatOptionTypeModel(optionImage: "renameChatConversation", optionName:"Rename Conversation", cellType: .renameConversation))
+         optionArray.append(ChatOptionTypeModel(optionImage: "Alerts", optionName: "Notification Setting", cellType: .notificationSetting))
+         if isFavourite ?? false {
+             optionArray.append(ChatOptionTypeModel(optionImage: "Mark-as-Unfavorite", optionName: "Mark as Unfavorite" , cellType: .markFavorite))
+         }else{
+             optionArray.append(ChatOptionTypeModel(optionImage: "Mark-as-favorite", optionName: "Mark as favorite" , cellType: .markFavorite))
+         }
+        if isRead ?? false {
+            optionArray.append(ChatOptionTypeModel(optionImage: "unreadChatMsgs", optionName:"Mark As UnRead" , cellType: .markUnread))
+        }else{
+            optionArray.append(ChatOptionTypeModel(optionImage: "markAsRead", optionName: "Mark As Read" , cellType: .markUnread))
+        }
+         if isArchive ?? false {
+             optionArray.append(ChatOptionTypeModel(optionImage: "UnArchive", optionName:"UnArchive", cellType: .archive))
+         }else{
+             optionArray.append(ChatOptionTypeModel(optionImage: "Archive", optionName: "Archive" , cellType: .archive))
+         }
+         optionArray.append(ChatOptionTypeModel(optionImage: "leave", optionName: "leave", cellType: .leave))
+         optionArray.append(ChatOptionTypeModel(optionImage: "Report", optionName:"Report", cellType: .report))
+         
+         completion(optionArray)
+     }
+     
+     // for single chat view
+     func addChatOptions(isFavourite:Bool?,isArchive:Bool?, isUserMute: String?, isRead:Bool?, completion:@escaping ([ChatOptionTypeModel]) -> Void){
+         
+         var optionArray = [ChatOptionTypeModel]()
+         
+         optionArray.append(ChatOptionTypeModel(optionImage: "Add-people", optionName:"Add people" , cellType: .addPeople))
+         if isFavourite ?? false {
+             optionArray.append(ChatOptionTypeModel(optionImage: "Mark-as-Unfavorite", optionName: "Mark as Unfavorite" , cellType: .markFavorite))
+         }else{
+             optionArray.append(ChatOptionTypeModel(optionImage: "Mark-as-favorite", optionName: "Mark as favorite" , cellType: .markFavorite))
+         }
+         if isUserMute == "true" {
+             optionArray.append(ChatOptionTypeModel(optionImage: "mute-volume-interface-symbol", optionName: "UnMute"  , cellType: .mute))
+         }else{
+             optionArray.append(ChatOptionTypeModel(optionImage: "mute-volume-interface-symbol", optionName: "Mute" , cellType: .mute))
+         }
+         if isRead ?? false {
+             optionArray.append(ChatOptionTypeModel(optionImage: "unreadChatMsgs", optionName:"Mark As UnRead" , cellType: .markUnread))
+         }else{
+             optionArray.append(ChatOptionTypeModel(optionImage: "markAsRead", optionName: "Mark As Read" , cellType: .markUnread))
+         }
+         if isArchive ?? false {
+             optionArray.append(ChatOptionTypeModel(optionImage: "UnArchive", optionName:"UnArchive", cellType: .archive))
+         }else{
+             optionArray.append(ChatOptionTypeModel(optionImage: "Archive", optionName: "Archive" , cellType: .archive))
+         }
+         optionArray.append(ChatOptionTypeModel(optionImage: "Report", optionName: "Report" /*"Report"*/, cellType: .report))
+         
+         completion(optionArray)
+     }
+    
 }

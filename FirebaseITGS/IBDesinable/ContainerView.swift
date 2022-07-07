@@ -540,6 +540,12 @@ class tableShadowView: UITableView {
         return Static.fontAwesomeUnicodeStrings
     }
     
+    func setSVG(_  name:SVGEnum,withColor color:UIColor)
+    {
+        self.image = nil
+        self.SetDefaultIconIdentifier(defaultIconIdentifier: name.rawValue)
+        self.defaultview.textColor = _color
+    }
     
     func setSVGWithId(_  id:NSString,withColor color:UIColor)
     {

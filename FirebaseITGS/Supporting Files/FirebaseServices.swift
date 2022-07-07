@@ -37,6 +37,7 @@ class FirebaseService {
     var usersBase = DB_BASE.child("contacts")
     var groupBase = DB_BASE.child("groups")
     var feebBase = DB_BASE.child("feeds")
+    var archiveConvSender:DatabaseReference!
     
     func getChatDatabaseRootRefrence() -> DatabaseReference {
         return Database.database().reference()
@@ -205,6 +206,38 @@ class FirebaseService {
                 }
             }else{
                 handler(false)
+            }
+        }
+    }
+
+    func setMarkAsArchive(userObj: ChatConversation?, handler: @escaping(_ success: Bool) ->()){
+        
+        //guard let currentUserId =  UserDefaults.standard.value(forKey: "currentFireUserId") else {return}
+        let currentUserId = "WLRZzIyxLAU6Z2qrLGhpcHvVWT23"
+        if currentUserId == "" {
+            return
+        }
+        guard let toUsreId =  UserDefaults.standard.value(forKey: "FirToUserId") else {return}
+        
+        var archived:Bool = userObj?.isarchived ?? false
+        if !(toUsreId as? String ?? "").isEmpty{
+            archiveConvSender = self.databaseChats1().child(currentUserId as! String).child(toUsreId as! String)
+            archiveConvSender.keepSynced(true)
+            archiveConvSender.observeSingleEvent(of:.value) { (snapshot) in
+                if snapshot.exists() {
+                    if  let messageDict = snapshot.value as? [String: Any]{
+                        archived = messageDict["isarchived"] as? Bool ?? false
+                        let lastMessageRef = self.databaseChats1().child(currentUserId as! String).child(toUsreId as! String)
+                        lastMessageRef.updateChildValues(["isarchived": !archived
+                            ] as [String : Any?] as [AnyHashable : Any])
+                        
+                        self.archiveConvSender.removeAllObservers()
+                        handler(true)
+                    }
+                }else{
+                    self.archiveConvSender.removeAllObservers()
+                    handler(false)
+                }
             }
         }
     }

@@ -1655,33 +1655,33 @@ struct encryptedKeys {
     static let deliveryStatus4 = "FiugQTgPNwCWUY,VhfmM4cKXTLVFvHFeFoUr"
 }
 
-class ChatOptionTypeModel: NSObject {
-    
-    var optionImage, optionName: String?
-    var cellType: chatOptionsType
-    
-    init(optionImage: String = "", optionName: String = "", cellType: chatOptionsType){
-        self.optionImage = optionImage
-        self.optionName = optionName
-        self.cellType = cellType
-    }
-}
+//class ChatOptionTypeModel: NSObject {
+//
+//    var optionImage, optionName: String?
+//    var cellType: chatOptionsType
+//
+//    init(optionImage: String = "", optionName: String = "", cellType: chatOptionsType){
+//        self.optionImage = optionImage
+//        self.optionName = optionName
+//        self.cellType = cellType
+//    }
+//}
 
-enum chatOptionsType: String {
-    case addPeople
-    case markFavorite
-    case mute
-    case markUnread
-    case archive
-    case report
-    case removePeople
-    case renameConversation
-    case notificationSetting
-    case leave
-    case allActivity
-    case onlyMentions
-    case muteNotifications
-}
+//enum chatOptionsType: String {
+//    case addPeople
+//    case markFavorite
+//    case mute
+//    case markUnread
+//    case archive
+//    case report
+//    case removePeople
+//    case renameConversation
+//    case notificationSetting
+//    case leave
+//    case allActivity
+//    case onlyMentions
+//    case muteNotifications
+//}
 
 enum newChatCellType: String {
     case sender
