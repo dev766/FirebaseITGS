@@ -17,6 +17,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     var chatConversationListViewModel = ChatConversationListViewModel()
     var filterConversationList = [ChatConversation]()
     var friendList = [String: Any]()
+    var users = [User]()
     var conversationList = [ChatConversation]()
     var unArchiveConversationList = [ChatConversation]()
     var archiveConversationList = [ChatConversation]()
@@ -124,11 +125,28 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         chatUserRefrance.keepSynced(true)
         chatUserRefrance.observeSingleEvent(of: .value) { (snapshot) in
             if let userSnapshot = snapshot.value {
-            self.friendList = userSnapshot as! [String: Any]
+                self.friendList = userSnapshot as! [String: Any]
+                for indexx in 0...(self.friendList.count - 1) {
+                    let index = self.friendList.index(self.friendList.startIndex, offsetBy: indexx)
+                    let key = self.friendList.keys[index]
+                    
+                    if let value = self.friendList[key] as? [String: Any] {
+                        
+                        if let uuid = value["uuid"] as? String, let name = value["name"] as? String {
+                            let user = User(UUID: uuid, deviceToken: "", name: name, online: "", image: "", emp_id: "", isSelected: false, deviceType: "", knownAs: "", empStatus: "")
+                            self.users.append(user)
+                        } else {
+                            let user = User(UUID: value["uuid"] as? String ?? "null", deviceToken: "", name: value["name"] as? String ?? "null", online: "", image: "", emp_id: "", isSelected: false, deviceType: "", knownAs: "", empStatus: "")
+                            self.users.append(user)
+                        }
+                    }
+                }
+                
             }
         }
     }
-    
+
+
 
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -155,7 +173,10 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
 
     }
 
-
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = NewChatConversationViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
 
 }
 

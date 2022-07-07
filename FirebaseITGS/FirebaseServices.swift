@@ -12,6 +12,8 @@ import FirebaseStorage
 
 let DB_BASE = Database.database().reference()
 var DB_STROGE = Storage.storage().reference()
+var chatTableReferance:DatabaseReference!
+
 
 extension DatabaseReference{
     func updateChildValues( _ v: [String: Any]){
@@ -185,6 +187,28 @@ class FirebaseService {
             muteConvRef.removeAllObservers()
         }
     }
+    
+    func unArchiveChatConversation(handler: @escaping(_ success: Bool) ->()) {
+        
+        let currentFirebaseUserId = ""//sss
+        if currentFirebaseUserId == ""{
+            print("Unarchiving Chat Conversation currentUserId nil in unarchiveChatConv method")
+            handler(false)
+            return
+        }
+        chatTableReferance = self.databaseChats1().child(currentFirebaseUserId)
+        chatTableReferance.keepSynced(true)
+        chatTableReferance.observe(.value) { (snapshot) in
+            if snapshot.exists() {
+                handler(true)
+                if  (snapshot.value as? [String: Any]) != nil{
+                }
+            }else{
+                handler(false)
+            }
+        }
+    }
+
 
 //MARK:- Auth Services
     

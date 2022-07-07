@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Roboto-Medium.ttf">
+            <string>Roboto-Medium</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="conversationDateCell" rowHeight="50" id="KGk-i7-Jjw" customClass="ConversationDateTableViewCell" customModule="PeopleHr" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="323" height="50"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="323" height="49.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q3F-h7-N4v" userLabel="LineView">
+                        <rect key="frame" x="15" y="24.5" width="95.5" height="0.5"/>
+                        <color key="backgroundColor" red="0.19215686269999999" green="0.24313725489999999" blue="0.35294117650000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="0.5" id="Avc-nr-mqt"/>
+                        </constraints>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TODAY" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hzJ-HI-oQP">
+                        <rect key="frame" x="142.5" y="0.0" width="38" height="49.5"/>
+                        <color key="backgroundColor" red="0.96470588239999999" green="0.96470588239999999" blue="0.97647058819999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="12"/>
+                        <color key="textColor" red="0.19215686269999999" green="0.24313725489999999" blue="0.35294117650000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u4Z-uq-cDY" userLabel="LineView">
+                        <rect key="frame" x="212.5" y="24.5" width="94.5" height="0.5"/>
+                        <color key="backgroundColor" red="0.19215686269999999" green="0.24313725489999999" blue="0.35294117650000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="0.5" id="21g-Uk-fBb"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <color key="backgroundColor" red="0.96470588235294119" green="0.96470588235294119" blue="0.97647058823529409" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                <constraints>
+                    <constraint firstAttribute="trailingMargin" secondItem="u4Z-uq-cDY" secondAttribute="trailing" id="3Xq-0i-gZu"/>
+                    <constraint firstAttribute="bottom" secondItem="hzJ-HI-oQP" secondAttribute="bottom" id="BIQ-zp-f4v"/>
+                    <constraint firstItem="Q3F-h7-N4v" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="LRa-Bk-cRD"/>
+                    <constraint firstItem="u4Z-uq-cDY" firstAttribute="leading" secondItem="hzJ-HI-oQP" secondAttribute="trailing" constant="32" id="iAo-hg-9PD"/>
+                    <constraint firstItem="Q3F-h7-N4v" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="mg4-oc-LxT"/>
+                    <constraint firstItem="hzJ-HI-oQP" firstAttribute="leading" secondItem="Q3F-h7-N4v" secondAttribute="trailing" constant="32" id="o7k-bc-CVZ"/>
+                    <constraint firstItem="hzJ-HI-oQP" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="pIG-Hg-iuY"/>
+                    <constraint firstItem="u4Z-uq-cDY" firstAttribute="centerY" secondItem="Q3F-h7-N4v" secondAttribute="centerY" id="s7n-dm-rBJ"/>
+                    <constraint firstItem="hzJ-HI-oQP" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="vSs-Vh-803"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="dateLabel" destination="hzJ-HI-oQP" id="0lQ-Hd-ehN"/>
+            </connections>
+            <point key="canvasLocation" x="-87.200000000000003" y="96.251874062968525"/>
+        </tableViewCell>
+    </objects>
+</document>
+

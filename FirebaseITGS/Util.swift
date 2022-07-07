@@ -14,7 +14,10 @@ class Util {
     public func getEncryptionKey() -> String {
         return "FiugQTgPNwCWUY,VhfmM4cKXTLVFvHFe"
     }
-
+    
+    func checkInternetAndShowAlert() -> Bool {
+        return true
+    }
 }
 
 //MARK:- Auth Services

@@ -14,6 +14,8 @@ target 'FirebaseITGS' do
   pod 'Firebase/InAppMessaging', '~> 9.2.0'
   pod 'IQKeyboardManager'
   pod 'InitialsImageView'
+  pod 'GrowingTextView'
+  pod 'CropViewController'
 
 
 

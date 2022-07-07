@@ -10,6 +10,11 @@ import UIKit
 import InitialsImageView
 
 //MARK:- STRING
+enum ToastPosition {
+    case top
+    case middle
+    case bottom
+}
 
 extension String {
     
@@ -59,8 +64,34 @@ extension String {
         attributedString.addAttributes(colorAttribute, range: range)
         return attributedString
     }
+    
+    func attributedTextWithBlackUnderLine(url: String, color: UIColor) -> NSAttributedString{
+        let attributedString = NSMutableAttributedString(string: self,
+                                                         attributes: [NSAttributedString.Key.font: UIFont(name: "Roboto", size: 17.0)!])
+        let blackUnderLineAtt: [NSAttributedString.Key: Any] = [
+            NSAttributedString.Key.font : UIFont(name: "Roboto", size: 17.0),
+            NSAttributedString.Key.foregroundColor : color,
+            NSAttributedString.Key.underlineStyle : 1]
+        let range = (self as NSString).range(of: url, options: .caseInsensitive)
+        attributedString.addAttributes(blackUnderLineAtt, range: range)
+        return attributedString
+    }
 
 }
+
+extension NSMutableAttributedString {
+
+    public func setAsLink(textToFind:String, linkURL:String) -> Bool {
+
+        let foundRange = self.mutableString.range(of: textToFind)
+        if foundRange.location != NSNotFound {
+            self.addAttribute(.link, value: linkURL, range: foundRange)
+            return true
+        }
+        return false
+    }
+}
+
 
 //MARK:- UIColor Extensions
 extension UIColor {
@@ -140,4 +171,109 @@ func setImage(link:String, imageType : imageType, showLoadingIndicator: Bool = f
             print("")
         }
 }
+}
+
+//MARK:- UIViewController
+extension UIViewController {
+    func showToast(message : String , toastPosition: ToastPosition = .middle) {
+        
+        if let toast = self.view.viewWithTag(101){
+            toast.removeFromSuperview()
+        }
+        
+        let tempLabel = UILabel()
+        tempLabel.numberOfLines = 0
+        tempLabel.frame.origin.x = 16
+        tempLabel.frame.size.width = self.view.frame.size.width - 32
+        tempLabel.font = UIFont(name:"Roboto", size: 17)
+        tempLabel.text = message
+        tempLabel.clipsToBounds = true
+        tempLabel.sizeToFit()
+        
+        
+        
+        
+        
+        if let toast = self.view.viewWithTag(101){
+            toast.removeFromSuperview()
+        }
+        
+        let toastLabel = PaddingLabel()
+        toastLabel.tag = 101
+        toastLabel.numberOfLines = 0
+        toastLabel.backgroundColor = UIColor.darkGray
+        toastLabel.textColor = UIColor.white
+        toastLabel.textAlignment = .center
+        toastLabel.font = UIFont(name: "Roboto", size: 17)
+        toastLabel.text = message
+        toastLabel.alpha = 0
+        toastLabel.layer.cornerRadius = 10;
+        toastLabel.clipsToBounds  =  true
+        toastLabel.adjustsFontSizeToFitWidth = true
+        //toastLabel.sizeToFit()
+        if let v = UIApplication.shared.keyWindow{
+            v.addSubview(toastLabel)
+            toastLabel.translatesAutoresizingMaskIntoConstraints = false
+            toastLabel.leadingAnchor.constraint(equalTo: v.leadingAnchor, constant: 16).isActive = true
+            toastLabel.trailingAnchor.constraint(equalTo: v.trailingAnchor, constant: -16).isActive = true
+            // set position fot toast
+            if toastPosition == .middle{
+                toastLabel.centerYAnchor.constraint(equalTo: v.centerYAnchor, constant: -20).isActive = true
+            }else if toastPosition == .top{
+                toastLabel.topAnchor.constraint(equalTo: v.safeAreaLayoutGuide.topAnchor, constant: 30).isActive = true
+            }else{
+                    toastLabel.centerYAnchor.constraint(equalTo: v.safeAreaLayoutGuide.bottomAnchor, constant: -155).isActive = true
+            }
+            toastLabel.heightAnchor.constraint(equalToConstant: tempLabel.bounds.height + 20).isActive = true
+        }
+        
+        UIView.animate(withDuration: 1.0, delay: 0, options: .curveEaseIn, animations: {
+            toastLabel.alpha = 1
+        }, completion: {(isCompleted) in
+            
+            UIView.animate(withDuration: 0.2, delay: 2, options: .curveEaseIn, animations: {
+                toastLabel.alpha = 0
+            }, completion: {(isCompleted) in
+                toastLabel.removeFromSuperview()
+            })
+        })
+        
+    }
+
+}
+
+//MARK:- UIView
+extension UIView {
+    func addLoaderInView(){
+        ActivityIndicator.addActivityIndicator(view: self)
+    }
+    
+    func showLoader(){
+        ActivityIndicator.viewLoader.isHidden = false
+        ActivityIndicator.viewLoader.startAnimating()
+    }
+    
+    func removeLoader(){
+        ActivityIndicator.viewLoader.isHidden = true
+        ActivityIndicator.viewLoader.stopAnimating()
+    }
+    
+    private struct ActivityIndicator{
+        static let viewLoader: UIActivityIndicatorView = {
+            let activityIndicator = UIActivityIndicatorView()
+            activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+            activityIndicator.color = UIColor(hexString: "313E5A")
+            activityIndicator.isHidden = true
+            return activityIndicator
+        }()
+        
+        static func addActivityIndicator(view: UIView){
+            ActivityIndicator.viewLoader.removeFromSuperview()
+            view.addSubview(ActivityIndicator.viewLoader)
+            ActivityIndicator.viewLoader.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+            ActivityIndicator.viewLoader.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+            ActivityIndicator.viewLoader.widthAnchor.constraint(equalToConstant: 16).isActive = true
+            ActivityIndicator.viewLoader.heightAnchor.constraint(equalToConstant: 16).isActive = true
+        }
+    }
 }

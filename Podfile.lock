@@ -1,4 +1,5 @@
 PODS:
+  - CropViewController (2.6.1)
   - Firebase/Auth (9.2.0):
     - Firebase/CoreOnly
     - FirebaseAuth (~> 9.2.0)
@@ -92,6 +93,7 @@ PODS:
     - GoogleUtilities/Logger
   - GoogleUtilities/UserDefaults (7.7.0):
     - GoogleUtilities/Logger
+  - GrowingTextView (0.7.2)
   - GTMSessionFetcher/Core (2.0.0)
   - InitialsImageView (0.7.0)
   - IQKeyboardManager (6.5.10)
@@ -104,17 +106,20 @@ PODS:
   - PromisesObjC (2.1.1)
 
 DEPENDENCIES:
+  - CropViewController
   - Firebase/Auth (~> 9.2.0)
   - Firebase/Database (~> 9.2.0)
   - Firebase/InAppMessaging (~> 9.2.0)
   - Firebase/Messaging (~> 9.2.0)
   - Firebase/Storage (~> 9.2.0)
   - FirebaseCore (~> 9.2.0)
+  - GrowingTextView
   - InitialsImageView
   - IQKeyboardManager
 
 SPEC REPOS:
   trunk:
+    - CropViewController
     - Firebase
     - FirebaseABTesting
     - FirebaseAppCheckInterop
@@ -132,6 +137,7 @@ SPEC REPOS:
     - FirebaseStorageInternal
     - GoogleDataTransport
     - GoogleUtilities
+    - GrowingTextView
     - GTMSessionFetcher
     - InitialsImageView
     - IQKeyboardManager
@@ -140,6 +146,7 @@ SPEC REPOS:
     - PromisesObjC
 
 SPEC CHECKSUMS:
+  CropViewController: 58fb440f30dac788b129d2a1f24cffdcb102669c
   Firebase: 4ba896cb8e5105d4b9e247e1c1b6222b548df55a
   FirebaseABTesting: cd1ec762a0078b46a7ce91dfe5b7b8991c2dff8f
   FirebaseAppCheckInterop: 003b4882460c2827d1e2a1a81b65e88440eb01fa
@@ -157,6 +164,7 @@ SPEC CHECKSUMS:
   FirebaseStorageInternal: 50c963664bc73739b68eb2d8427c91de5168dbcf
   GoogleDataTransport: 5fffe35792f8b96ec8d6775f5eccd83c998d5a3b
   GoogleUtilities: e0913149f6b0625b553d70dae12b49fc62914fd1
+  GrowingTextView: 876bf42005b5e4a4fd740597db12caaf41f0fe6c
   GTMSessionFetcher: 681175626052e03fdde7952f7e9c7a9785719506
   InitialsImageView: 7a416d36fc6df5434198664db28a3ffb0228426d
   IQKeyboardManager: 45a1fa55c1a5b02c61ac0fd7fd5b62bb4ad20d97
@@ -164,6 +172,6 @@ SPEC CHECKSUMS:
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
 
-PODFILE CHECKSUM: 39fb0ad7266c753b2627149184e3ac359f85bb7d
+PODFILE CHECKSUM: f0dfdd1e1b036614d50c8c3d9259feb2f8e02602
 
 COCOAPODS: 1.11.3

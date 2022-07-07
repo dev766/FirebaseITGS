@@ -6,30 +6,6 @@
 //
 import UIKit
 
-@IBDesignable
-class ContainerView: UIView {
-    @IBInspectable var cornerRadius: CGFloat = 0.0 {
-        didSet {
-            let viewHeight:CGFloat = self.frame.height
-            self.layer.cornerRadius = viewHeight/2
-            self.layer.masksToBounds = true
-        }
-    }
-    @IBInspectable var bgColor: UIColor = UIColor.clear  {
-        didSet {
-            self.backgroundColor = bgColor
-        }
-    }
-}
-
-class DateContainer: UIView {
-    @IBInspectable var cornerRadius: CGFloat = 0.0 {
-        didSet {
-            self.layer.cornerRadius = cornerRadius
-        }
-    }
-}
-
 class shadowView: UIView {
     
     @IBInspectable
@@ -117,6 +93,32 @@ class shadowView: UIView {
         }
     }
 }
+
+
+@IBDesignable
+class ContainerView: UIView {
+    @IBInspectable var cornerRadius: CGFloat = 0.0 {
+        didSet {
+            let viewHeight:CGFloat = self.frame.height
+            self.layer.cornerRadius = viewHeight/2
+            self.layer.masksToBounds = true
+        }
+    }
+    @IBInspectable var bgColor: UIColor = UIColor.clear  {
+        didSet {
+            self.backgroundColor = bgColor
+        }
+    }
+}
+
+class DateContainer: UIView {
+    @IBInspectable var cornerRadius: CGFloat = 0.0 {
+        didSet {
+            self.layer.cornerRadius = cornerRadius
+        }
+    }
+}
+
 @IBDesignable
 class GradientUIView: UIView {
     
@@ -566,6 +568,23 @@ class tableShadowView: UITableView {
         label.sizeToFit()
         
         return label.frame.height
+    }
+}
+
+@IBDesignable
+class PaddingLabel: UILabel {
+    
+    override func drawText(in rect: CGRect) {
+        let insets = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)//CGRect.inset(by:)
+        super.drawText(in: rect.inset(by: insets))
+    }
+    
+    @IBInspectable var cornerRadius: CGFloat = 0.0 {
+        didSet {
+            
+            self.layer.cornerRadius = cornerRadius
+            self.layer.masksToBounds = true
+        }
     }
 }
 

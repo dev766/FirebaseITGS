@@ -206,5 +206,139 @@ enum imageType : String {
     case noImage
 }
 
+class EmployeeDetailsList: Codable {
+    let employeeID: Int64?
+    let firstName, lastName: String?
+    let knownAs: String?
+    let jobRole: String?
+    var thumbNailPicture, picture: String?
+    let workPhoneNumber: String?
+    let address: String?
+    let emailID: String?
+    let isChatAvailable: Bool?
+    let jabberID: String?
+    let roleID: Int64?
+    let employeeCompanyID: Int64?
+    let employeeCompanyName: String?
+    let employeeDepartmentID: Int64?
+    let employeeDepartmentName: String?
+    let employeeLocationID: Int64?
+    let employeeLocationName: String?
+    let employeeEmploymentTypeId: Int64?
+    let employeeEmploymentTypeName: String?
+    let isAllowSick,isShowPlanner: Bool?
+    let isShowLogBook, isShowPersonalInfo, isShowDoccument, isTeamMember, isProxyMember, isShowContact, isShowBankInfo, isShowProfile: Bool?
+    var isSelected : Bool?
+    let isAtWork: Bool?
+    let employeeFirebaseId: String?
+    let employeeFirebaseUUID : String?
+    let loggedInRoleId: Int64?
+    let isShowEmpDob, isEmployeeCanUploadPhoto: Bool?
+    let uniqueID: String?
+    let isProxyShowContact, isProxyShowPersonal, isProxyShowBankDetail, isShowEmailMatchingAdminDomain: Bool?
+    let isShowEmpStatistics: Bool?
+    let nationality: String?
+    let nationalityID: Int?
+    
+    enum CodingKeys: String, CodingKey {
+        case employeeID = "EmployeeId"
+        case firstName = "FirstName"
+        case lastName = "LastName"
+        case knownAs = "KnownAs"
+        case jobRole = "JobRole"
+        case thumbNailPicture = "ThumbNailPicture"
+        case picture = "Picture"
+        case workPhoneNumber = "WorkPhoneNumber"
+        case address = "Address"
+        case emailID = "EmailId"
+        case isChatAvailable = "IsChatAvailable"
+        case jabberID = "JabberId"
+        case roleID = "RoleId"
+        case loggedInRoleId = "LoggedInRoleId"
+        case employeeCompanyID = "EmployeeCompanyId"
+        case employeeCompanyName = "EmployeeCompanyName"
+        case employeeDepartmentID = "EmployeeDepartmentId"
+        case employeeDepartmentName = "EmployeeDepartmentName"
+        case employeeLocationID = "EmployeeLocationId"
+        case employeeLocationName = "EmployeeLocationName"
+        case employeeEmploymentTypeId = "EmployeeEmploymentTypeId"
+        case employeeEmploymentTypeName = "EmployeeEmploymentTypeName"
+        case isAllowSick = "IsAllowSick"
+        case isShowPlanner = "IsShowPlanner"
+        case isShowLogBook = "IsShowLogBook"
+        case isShowPersonalInfo = "IsShowPersonalInfo"
+        case isShowDoccument = "IsShowDoccument"
+        case isSelected = "isSelected"
+        case isAtWork = "IsAtWork"
+        case employeeFirebaseId = "FirebaseID"
+        case employeeFirebaseUUID = "FirebaseUUID"
+        case isTeamMember = "IsTeamMember"
+        case isProxyMember = "IsProxyMember"
+        case isShowContact = "IsShowContact"
+        case isShowBankInfo = "IsShowBankInfo"
+        case isShowProfile = "IsShowProfile"
+        case isShowEmpDob = "IsShowEmpDob"
+        case isEmployeeCanUploadPhoto = "IsEmployeeCanUploadPhoto"
+        case uniqueID = "UniqueId"
+        case isProxyShowContact = "IsProxyShowContact"
+        case isProxyShowPersonal = "IsProxyShowPersonal"
+        case isProxyShowBankDetail = "IsProxyShowBankDetail"
+        case isShowEmailMatchingAdminDomain = "IsShowEmailMatchingAdminDomain"
+        case isShowEmpStatistics = "IsShowEmpStatistics"
+        case nationalityID = "NationalityId"
+        case nationality = "Nationality"
+    }
+    
+    init(employeeID: Int64?, firstName: String?, lastName: String?, knownAs: String?, jobRole: String?, thumbNailPicture: String?, picture: String?, workPhoneNumber: String?, address: String?, emailID: String?, isChatAvailable: Bool?, jabberID: String?, roleID: Int64?, employeeCompanyID: Int64?, employeeCompanyName: String?, employeeDepartmentID: Int64?, employeeDepartmentName: String?, employeeLocationID: Int64?, employeeLocationName: String?, employeeEmploymentTypeId: Int64?, employeeEmploymentTypeName: String?, isSelected: Bool?, isAtWork: Bool?,isAllowSick: Bool?, isShowPlanner: Bool?, isShowLogBook: Bool?, isShowPersonalInfo: Bool?, isShowDoccument: Bool?, employeeFirebaseId: String?,employeeFirebaseUUID:String?, isTeamMember: Bool?, isProxyMember: Bool?, isShowContact: Bool?, isShowBankInfo: Bool?, isShowProfile: Bool?, loggedInRoleId: Int64?, isShowEmpDob: Bool?, isEmployeeCanUploadPhoto: Bool?, uniqueID: String?, isProxyShowContact: Bool?, isProxyShowPersonal: Bool?, isProxyShowBankDetail: Bool?, isShowEmailMatchingAdminDomain: Bool?, isShowEmpStatistics: Bool?, nationality: String?, nationalityID: Int?) {
+        
+        self.employeeID = employeeID
+        self.firstName = firstName
+        self.lastName = lastName
+        self.knownAs = knownAs
+        self.jobRole = jobRole
+        self.thumbNailPicture = thumbNailPicture
+        self.picture = picture
+        self.workPhoneNumber = workPhoneNumber
+        self.address = address
+        self.emailID = emailID
+        self.isChatAvailable = isChatAvailable
+        self.jabberID = jabberID
+        self.roleID = roleID
+        self.employeeCompanyID = employeeCompanyID
+        self.employeeCompanyName = employeeCompanyName
+        self.employeeDepartmentID = employeeDepartmentID
+        self.employeeDepartmentName = employeeDepartmentName
+        self.employeeLocationID = employeeLocationID
+        self.employeeLocationName = employeeLocationName
+        self.employeeEmploymentTypeId = employeeEmploymentTypeId
+        self.employeeEmploymentTypeName = employeeEmploymentTypeName
+        self.isSelected = isSelected
+        self.isAllowSick = isAllowSick
+        self.isAtWork = isAtWork
+        self.isShowPlanner = isShowPlanner
+        self.isShowLogBook = isShowLogBook
+        self.isShowPersonalInfo = isShowPersonalInfo
+        self.isShowDoccument = isShowDoccument
+        self.employeeFirebaseId = employeeFirebaseId
+        self.employeeFirebaseUUID = employeeFirebaseUUID
+        self.isTeamMember = isTeamMember
+        self.isProxyMember = isProxyMember
+        self.isShowContact = isShowContact
+        self.isShowBankInfo = isShowBankInfo
+        self.isShowProfile = isShowProfile
+        self.loggedInRoleId = loggedInRoleId
+        self.isShowEmpDob = isShowEmpDob
+        self.isEmployeeCanUploadPhoto = isEmployeeCanUploadPhoto
+        self.uniqueID = uniqueID
+        self.isProxyShowContact = isProxyShowContact
+        self.isProxyShowPersonal = isProxyShowPersonal
+        self.isProxyShowBankDetail = isProxyShowBankDetail
+        self.isShowEmailMatchingAdminDomain = isShowEmailMatchingAdminDomain
+        self.isShowEmpStatistics = isShowEmpStatistics
+        self.nationalityID = nationalityID
+        self.nationality = nationality
+    }
+}
+
 
 
