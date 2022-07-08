@@ -24,6 +24,7 @@ class HomeViewController: UIViewController {
     var activeConversationList = [ChatConversation]()
     var allConversationList = [ChatConversation]()
     var favouriteUnArchivedConversationList = [ChatConversation]()
+    var users = [User]()
     var seatchTextForSearching:String = ""
     var selectedfilter:String = ""
     var isSearch:Bool = false
@@ -32,6 +33,7 @@ class HomeViewController: UIViewController {
     var allMessagesKeyArr = [String]()
     var toUserObject:ChatConversation!
     var chatConversationViewModel = ChatConversationListViewModel()
+    var isGroup = false
 
 
 
@@ -92,7 +94,6 @@ class HomeViewController: UIViewController {
 //            self.fetchSliderData()
             self.tableview.reloadData()
         })
-        favAction.accessibilityLabel = "chatConversation_alertAction_favAction"
         
         let activeAction = UIAlertAction(title:"Active", style: .default, handler: {(action) -> Void in
 //            self.changeImageOfFilterIcon(isApplied: true)
@@ -102,7 +103,6 @@ class HomeViewController: UIViewController {
             self.tableview.reloadData()
 
         })
-        activeAction.accessibilityLabel = "chatConversation_alertAction_activeAction"
         
         
         let archivedAction = UIAlertAction(title:"Archived", style: .default, handler: {(action) -> Void in
@@ -113,7 +113,6 @@ class HomeViewController: UIViewController {
             self.tableview.reloadData()
 
         })
-        archivedAction.accessibilityLabel = "chatConversation_alertAction_archivedAction"
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: {(action) -> Void in
 //            self.changeImageOfFilterIcon(isApplied: false)
@@ -123,7 +122,6 @@ class HomeViewController: UIViewController {
             self.tableview.reloadData()
 
         })
-        cancelAction.accessibilityLabel = "chatConversation_alertAction_cancelAction"
         
         switch selectedfilter {
         case "All":
@@ -164,8 +162,9 @@ class HomeViewController: UIViewController {
         ChatAuthservice.shareInstance.emailLogin("sam2@gmail.com", password: "Password@1", fullName: "Sam2 Bhati", empId: 101, deviceToken: "aavvssyyddff", completion: { isSuccess, message in
             if isSuccess {
                 print("login SuccessFully")
+                UserDefaults.standard.set("WLRZzIyxLAU6Z2qrLGhpcHvVWT23", forKey: "currentUserFireId")
             }else {
-                print("login failed: \(message)")
+                UserDefaults.standard.set("WLRZzIyxLAU6Z2qrLGhpcHvVWT23", forKey: "currentUserFireId")
             }
         })
     }
@@ -223,11 +222,36 @@ class HomeViewController: UIViewController {
         chatUserRefrance.keepSynced(true)
         chatUserRefrance.observeSingleEvent(of: .value) { (snapshot) in
             if let userSnapshot = snapshot.value {
-            self.friendList = userSnapshot as! [String: Any]
+                self.friendList = userSnapshot as! [String: Any]
+                let currentUserId:String =  UserDefaults.standard.value(forKey: "currentUserFireId") as? String ?? ""
+                if currentUserId == "" {
+                    print("current User id nil")
+                    return
+                }
+
+                let currentUser = self.friendList[currentUserId] as! [String: Any]
+                let currentEmpId = currentUser["emp_id"] as! String
+                UserDefaults.standard.set(currentEmpId, forKey: "currentUserEmpID")
+                for indexx in 0...(self.friendList.count - 1) {
+                    let index = self.friendList.index(self.friendList.startIndex, offsetBy: indexx)
+                    let key = self.friendList.keys[index]
+                    
+                    if let value = self.friendList[key] as? [String: Any] {
+                        
+                        if let uuid = value["uuid"] as? String, let name = value["name"] as? String {
+                            let user = User(UUID: uuid, deviceToken: "", name: name, online: "", image: "", emp_id: "", isSelected: false, deviceType: "", knownAs: "", empStatus: "")
+                            self.users.append(user)
+                        } else {
+                            let user = User(UUID: value["uuid"] as? String ?? "null", deviceToken: "", name: value["name"] as? String ?? "null", online: "", image: "", emp_id: "", isSelected: false, deviceType: "", knownAs: "", empStatus: "")
+                            self.users.append(user)
+                        }
+                    }
+                }
+                
             }
         }
     }
-    
+
     func showChatOptions(userObj: ChatConversation?,toUserObj: ChatConversation?){
         if let isGroup = userObj?.isgroup {
             var GroupChatOptions = [ChatOptionTypeModel]()
@@ -278,9 +302,92 @@ extension HomeViewController:UITableViewDataSource,UITableViewDelegate{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = (self.storyboard?.instantiateViewController(identifier: "NewChatConversationViewController")) as! NewChatConversationViewController
-        self.navigationController?.pushViewController(vc, animated: true)
-  }
+        let controller = (self.storyboard?.instantiateViewController(identifier: "NewChatConversationViewController")) as! NewChatConversationViewController
+        let currentUserId:String =  UserDefaults.standard.value(forKey: "currentUserFireId") as? String ?? ""
+        if currentUserId == "" {
+            return
+        }
+        if isSearch && filterConversationList.count == 1{
+            
+        }else if isSearch && filterConversationList.count > 1{
+            
+            guard let firToUserId = filterConversationList[indexPath.row].toChatId else{ return }
+            guard let firToUserName = filterConversationList[indexPath.row].name else{ return }
+            guard let firToEmployeeId = filterConversationList[indexPath.row].emp_id else{ return }
+            
+            if let isGroupClick = filterConversationList[indexPath.row].isgroup,isGroupClick {
+                isGroup = false//sss
+            }else{
+                isGroup = false
+            }
+            
+            UserDefaults.standard.setValue(firToUserId, forKey: "FirToUserId")
+            UserDefaults.standard.setValue(firToUserName, forKey: "FirToUserName")
+            UserDefaults.standard.setValue(firToEmployeeId, forKey: "ToEmployeeId")
+            
+            FirebaseService.instance.getToChatUserConversation(toUserId:firToUserId , currentUserId:currentUserId as? String ?? ""){
+                chatConv in
+                if chatConv.emp_id != ""{
+                    self.toUserObject = chatConv
+                }
+            }
+            
+            
+            if isGroup {
+//                goToNewChatIfCurrentUserExistInGroup(index: indexPath.row)
+            }else{
+                    self.title = ""
+                    controller.userObj = filterConversationList[indexPath.row]
+                    controller.isGroupConversation = isGroup
+                    controller.isFromNewGroupChat = isGroup
+                    controller.clickedIndex = indexPath.row
+                    controller.toUserObj = self.toUserObject
+                    controller.comingFrom = "chatListVC"
+                    controller.ProfileImageForSingleUser = filterConversationList[indexPath.row].profile_pic ?? ""
+                    self.navigationController?.pushViewController(controller, animated: false)
+            }
+            
+            
+        }else if conversationList.count > 1{
+            
+            guard let firToUserId = conversationList[indexPath.row].toChatId else{ return }
+            guard let firToUserName = conversationList[indexPath.row].name else{ return }
+            guard let firToEmployeeId = conversationList[indexPath.row].emp_id else{ return }
+            
+            if let isGroupClick = conversationList[indexPath.row].isgroup,isGroupClick {
+                isGroup = true
+            }else{
+                isGroup = false
+            }
+            UserDefaults.standard.setValue(firToUserId, forKey: "FirToUserId")
+            UserDefaults.standard.setValue(firToUserName, forKey: "FirToUserName")
+            UserDefaults.standard.setValue(firToEmployeeId, forKey: "ToEmployeeId")
+            
+            
+            FirebaseService.instance.getToChatUserConversation(toUserId:firToUserId , currentUserId:currentUserId as? String ?? ""){
+                chatConv in
+                if chatConv.emp_id != ""{
+                    self.toUserObject = chatConv
+                }
+            }
+            
+            if isGroup {
+//                goToNewChatIfCurrentUserExistInGroup(index: indexPath.row)
+            }else{
+                    self.title = ""
+                    controller.userObj = conversationList[indexPath.row]
+                    controller.isGroupConversation = isGroup
+                    controller.isFromNewGroupChat = isGroup
+                    controller.clickedIndex = indexPath.row
+                    controller.toUserObj = self.toUserObject
+                    controller.comingFrom = "chatListVC"
+                    controller.ProfileImageForSingleUser = conversationList[indexPath.row].profile_pic ?? ""
+                    self.navigationController?.pushViewController(controller, animated: false)
+            }
+            
+        }
+
+    }
 
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

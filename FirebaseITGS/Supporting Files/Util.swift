@@ -44,6 +44,7 @@ class ChatAuthservice: NSObject {
                                     completion(false, "authResult?.user.uid not created")
                                     return
                                 }
+                                UserDefaults.standard.set(firebaseUID, forKey: "currentUserFireId")
                                 let userRefer = self.firebaseService.databaseUsers().child(firebaseUID)
                                 let onlineStatus = "true"
                                 let employeeStatus = "1"
@@ -65,6 +66,8 @@ class ChatAuthservice: NSObject {
             } else {
                 print("FIR user ",user?.user)
                 if let usr = user?.user {
+                    let firID = usr.uid
+                    UserDefaults.standard.set(firID, forKey: "currentUserFireId")
                     Auth.auth().updateCurrentUser(usr) { (err) in
                         if err == nil{
                             completion(true, "Successfully Logged In")

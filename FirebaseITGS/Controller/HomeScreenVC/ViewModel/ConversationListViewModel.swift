@@ -27,8 +27,7 @@ class ChatConversationListViewModel {
         
     func loadAllFireBaseMessage11(snapshot: NSDictionary,completion:@escaping ([ChatConversation],[ChatConversation],[ChatConversation],[ChatConversation],[ChatConversation],[ChatConversation],Int) -> Void){
         
-        //let currentUserId:String =  UserDefaults.standard.value(forKey: "currentFireUserId") as? String ?? ""
-        let currentUserId = "WLRZzIyxLAU6Z2qrLGhpcHvVWT23"
+        let currentUserId:String =  UserDefaults.standard.value(forKey: "currentUserFireId") as? String ?? ""
         if currentUserId == "" {
             return
         }

@@ -67,7 +67,7 @@ extension String {
     
     func attributedTextWithBlackUnderLine(url: String, color: UIColor) -> NSAttributedString{
         let attributedString = NSMutableAttributedString(string: self,
-                                                         attributes: [NSAttributedString.Key.font: UIFont(name: "Roboto", size: 17.0)!])
+                                                         attributes: [NSAttributedString.Key.font: UIFont(name: "Roboto", size: 17.0)])
         let blackUnderLineAtt: [NSAttributedString.Key: Any] = [
             NSAttributedString.Key.font : UIFont(name: "Roboto", size: 17.0),
             NSAttributedString.Key.foregroundColor : color,

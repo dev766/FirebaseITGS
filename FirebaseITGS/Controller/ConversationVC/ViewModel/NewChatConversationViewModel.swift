@@ -64,7 +64,12 @@ class NewChatConversationViewModel {
 
     func loadAllFireBaseMessage11InNewChat(snapshot: NSDictionary,completion:@escaping (ChatConversation) -> Void){
             
-        let currentUserId = "" //sss
+        let currentUserId:String =  UserDefaults.standard.value(forKey: "currentUserFireId") as? String ?? ""
+       
+        if currentUserId == "" {
+            return
+        }
+        
         var unreadCountStr = 0
         var conversation:ChatConversation!
 
@@ -218,8 +223,7 @@ class NewChatConversationViewModel {
     
     func loadAllMessages(completion: @escaping ([Message],[String]) -> ())
     {
-        //guard let currentUserId =  UserDefaults.standard.value(forKey: "currentFireUserId") else {return}
-        let currentUserId = "" //sss
+        let currentUserId:String =  UserDefaults.standard.value(forKey: "currentUserFireId") as? String ?? ""
         if currentUserId == "" {
             return
         }
@@ -308,7 +312,7 @@ class NewChatConversationViewModel {
         
     func loadAllMessagesPagination(scrollToTop:Int, completion: @escaping ([Date:[Message]],[Date],[Message],[String]) -> ())
     {
-        let currentUserId = "" //sss
+        let currentUserId:String =  UserDefaults.standard.value(forKey: "currentUserFireId") as? String ?? ""
         if currentUserId == "" {
             return
         }
@@ -430,7 +434,7 @@ class NewChatConversationViewModel {
     
     func loadAllMessagesGroups(completion: @escaping ([Message],[String]) -> ()){
         
-        let currentUserId = "" //sss
+        let currentUserId:String =  UserDefaults.standard.value(forKey: "currentUserFireId") as? String ?? ""
         if currentUserId == "" {
             return
         }
@@ -516,7 +520,7 @@ class NewChatConversationViewModel {
     }
  
     func loadAllMessagesGroupsPagination(scrollToTop:Int, completion: @escaping ([Date:[Message]],[Date],[Message],[String]) -> ()){
-        let currentUserId = "" //sss
+        let currentUserId:String =  UserDefaults.standard.value(forKey: "currentUserFireId") as? String ?? ""
         if currentUserId == "" {
             return
         }
@@ -637,8 +641,7 @@ class NewChatConversationViewModel {
     func getGroupMembersOfGroup(completion: @escaping ([Any]) -> ())
     {
         guard let groupId =  UserDefaults.standard.value(forKey: "FirToUserId") else {return}
-        //guard let currentUserId =  UserDefaults.standard.value(forKey: "currentFireUserId") else {return}
-        let currentUserId = ""//sss
+        let currentUserId:String =  UserDefaults.standard.value(forKey: "currentUserFireId") as? String ?? ""
         if currentUserId == "" {
             return
         }
@@ -672,7 +675,7 @@ class NewChatConversationViewModel {
     {
         guard let groupId =  UserDefaults.standard.value(forKey: "FirToUserId") else {return}
         
-        let currentUserId = ""//sss
+        let currentUserId:String =  UserDefaults.standard.value(forKey: "currentUserFireId") as? String ?? ""
         if currentUserId == "" {
             return
         }
@@ -703,7 +706,7 @@ class NewChatConversationViewModel {
 
     func sendMessage(msgToSend:String, userObject: ChatConversation?, messageType:String?, msgsCount:Int?, mediaInfo1:String, mediaInfo2: String,isFileUploadedOnAWS: Bool)
     {
-        let loginUserID = ""//sss
+        let loginUserID:String =  UserDefaults.standard.value(forKey: "currentUserFireId") as? String ?? ""
         if loginUserID == "" {
             return
         }
@@ -782,10 +785,13 @@ class NewChatConversationViewModel {
         let firstNameIs = UserDefaults.standard.value(forKey: "FirstName") as! [String]
         let fromUserFullName = firstNameIs.first!.getFullName(lastName: (UserDefaults.standard.value(forKey: "LastName") as? [String])!)
         let fromEmpName = fromUserFullName
+        
         guard let toEmpName = UserDefaults.standard.value(forKey: "FirToUserName") as? String else {return}
-        //guard let currentEmpID = UserDefaults.standard.value(forKey: "EmployeeId") as? [Int] else{ return }
-        let currentEmpID = 0 //sss
+        
+        guard let currentEmpID = UserDefaults.standard.value(forKey: "currentUserEmpID") as? Int else{ return }
+        
         guard let toEmpID = UserDefaults.standard.value(forKey: "ToEmployeeId") else{ return }
+        
         self.unArchiveChatConv(currentUserId: loginUserID, toUserId: toUserId)
         
         if Util.shared.checkInternetAndShowAlert() == true || isInternetlimitedAccessEnable{
@@ -815,11 +821,12 @@ class NewChatConversationViewModel {
     
     func sendGroupMessage(allMentionedUUIDArrary:[Any], msgToSend:String, messageFor:String, actionPerformedOnUser:String, actionPerformedOnUserId:String, renamedGroupName:String, previousGroupName:String, groupMember:[Any], isNotifyMessage:String, messageType:String, mediaInfo1:String, mediaInfo2: String,isFileUploadedOnAWS: Bool, completion: @escaping(_ success: Bool) ->())
     {
-        //guard let loginUserID:String = UserDefaults.standard.value(forKey: "currentFireUserId") as? String else {return}
-        let loginUserID = "" // currentuserid sss
+        let loginUserID:String =  UserDefaults.standard.value(forKey: "currentUserFireId") as? String ?? ""
         if loginUserID == "" {
+            print("current User id nil")
             return
         }
+        
         let firstNameIs = UserDefaults.standard.value(forKey: "FirstName") as! [String]
         let userFullName = firstNameIs.first!.getFullName(lastName: (UserDefaults.standard.value(forKey: "LastName") as? [String])!)
         guard let toUserId = UserDefaults.standard.value(forKey: "FirToUserId") as? String else {return}
@@ -1028,8 +1035,9 @@ class NewChatConversationViewModel {
         let groupMemberId = grpMember
         var isRead:Bool = false
         //guard let loggedInUserId:String =  UserDefaults.standard.value(forKey: "currentFireUserId") as? String else {return}
-        let loggedInUserId = "" //sss
+        let loggedInUserId:String =  UserDefaults.standard.value(forKey: "currentUserFireId") as? String ?? ""
         if loggedInUserId == "" {
+            print("current User id nil")
             return
         }
         if loggedInUserId == groupMemberId{
@@ -1091,10 +1099,12 @@ class NewChatConversationViewModel {
     
     func getLastMessageOfConversationForSingleChat1(currentUserId:String, toUsreId:String, toEmpName:String, toEmpId:String, lastMsg:String, MsgType:String, msgsCount:Int?, messageKey:String, completion: @escaping(_ success: Bool) ->()){
         
-        let loggedInUserId = "" //sss
+        let loggedInUserId:String =  UserDefaults.standard.value(forKey: "currentUserFireId") as? String ?? ""
         if loggedInUserId == "" {
+            print("current User id nil")
             return
         }
+        
         if !currentUserId.isEmpty{
             var seenCount:String = "1"
             var chatconvDict: [String: Any] = [:]
@@ -1147,10 +1157,12 @@ class NewChatConversationViewModel {
                             lastMessageRef.updateChildValues(chat)
                     }else{/////For setting online and profile pic, userdetails  initially
                         
-                        let loggedInUserId = "" //sss
+                        let loggedInUserId:String =  UserDefaults.standard.value(forKey: "currentUserFireId") as? String ?? ""
                         if loggedInUserId == "" {
+                            print("current User id nil")
                             return
                         }
+                        
                         if currentUserId == loggedInUserId as? String ?? ""{
                             let checkOnlineStatusWhenComingFromNewChat: Bool = UserDefaults.standard.bool(forKey: "FirToOnline")
                             let checkProfilePicWhenComingFromNewChat = UserDefaults.standard.value(forKey: "FirToProfileImg") as? String ?? ""
@@ -1211,8 +1223,9 @@ class NewChatConversationViewModel {
 
     func editMessage(msgToSend:String,existingMsg:Message, isEdit:Bool, lastMsgKeyFromChatTable:String){
         //guard let loginUserID = UserDefaults.standard.value(forKey: "currentFireUserId") else{return}
-        let loginUserID = ""//sss
+        let loginUserID:String =  UserDefaults.standard.value(forKey: "currentUserFireId") as? String ?? ""
         if loginUserID == "" {
+            print("current User id nil")
             return
         }
         guard let toUserId = UserDefaults.standard.value(forKey: "FirToUserId") as? String else {return}
@@ -1308,8 +1321,9 @@ class NewChatConversationViewModel {
     func updateLastMessageOfConversationForSingleChat(currentUserId:String, toUsreId:String, lastMsg:Message, lastMsgStr:String, isEditMsg:Bool, existingMsg:Message, lastMsgKeyFromChatTable:String, completion: @escaping(_ success: Bool) ->()){
         
         //guard let loggedInUserId:String =  UserDefaults.standard.value(forKey: "currentFireUserId") as? String else {return}
-        let loggedInUserId = ""//sss
+        let loggedInUserId:String =  UserDefaults.standard.value(forKey: "currentUserFireId") as? String ?? ""
         if loggedInUserId == "" {
+            print("current User id nil")
             return
         }
         if currentUserId != ""{
@@ -1357,9 +1371,9 @@ class NewChatConversationViewModel {
         
     func editMessageForGroup(allMentionedUUIDArrary:[Any], groupMember:[Any], msgToSend:String, existingMsg:Message, isEdit:Bool, lastMsgKeyFromChatTable:String){
             
-        //guard let _:String = UserDefaults.standard.value(forKey: "currentFireUserId") as? String else {return}
-        let currentUserId = ""//sss
+        let currentUserId:String =  UserDefaults.standard.value(forKey: "currentUserFireId") as? String ?? ""
         if currentUserId == "" {
+            print("current User id nil")
             return
         }
         guard let toUserId = UserDefaults.standard.value(forKey: "FirToUserId") as? String else {return}
@@ -1555,8 +1569,9 @@ class NewChatConversationViewModel {
     func updateLastMessageOfConversationForGroupChat(groupMemberId:String, toUsreId:String, lastMsg:Message, isEditMsg:Bool, existingMsg:Message, lastMsgKeyFromChatTable:String,seenCount:String){
         
         //guard let _:String =  UserDefaults.standard.value(forKey: "currentFireUserId") as? String else {return}
-        let currentUserId = ""//sss
+        let currentUserId:String =  UserDefaults.standard.value(forKey: "currentUserFireId") as? String ?? ""
         if currentUserId == "" {
+            print("current User id nil")
             return
         }
         if !isEditMsg{

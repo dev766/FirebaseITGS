@@ -50,13 +50,7 @@ class SenderCellTableViewCell: UITableViewCell {
             
             var finalAttributedStr = NSMutableAttributedString()
             var attributedString = NSMutableAttributedString()
-            let detectedLanguage = self.detectedLanguage(for: message)
-            if detectedLanguage == "Arabic" || detectedLanguage == "Hebrew" || detectedLanguage == "Persian" || detectedLanguage == "Urdu"{
-                let LTRArebicMsg = "\u{200E}" + message
-                attributedString = NSMutableAttributedString(string: LTRArebicMsg)
-            }else{
                attributedString = NSMutableAttributedString(string: message)
-            }
             
              
             if matches.count > 0{
@@ -84,8 +78,14 @@ class SenderCellTableViewCell: UITableViewCell {
                 finalAttributedStr.append(emptyStringAtEndAttributedStr)
                 
             }
-            finalAttributedStr.addAttribute(NSAttributedString.Key.font, value: UIFont(name: "Roboto-Regular", size: 17.0)!, range: NSRange(location:0,length:message.count))
-            messageLabel.attributedText = finalAttributedStr
+//            for familyName:String in UIFont.familyNames {
+//                print("Family Name: \(familyName)")
+//                for fontName:String in UIFont.fontNames(forFamilyName: familyName) {
+//                     print("--Font Name: \(fontName)")
+//                 }
+//            }
+            finalAttributedStr.addAttribute(NSAttributedString.Key.font, value: UIFont(name: "Rockwell-Regular", size: 17.0)!, range: NSRange(location:0,length:message.count))
+            messageLabel.text = message + "                   "
         }
                 
         

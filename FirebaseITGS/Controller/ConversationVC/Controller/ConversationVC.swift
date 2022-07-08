@@ -207,8 +207,7 @@ class NewChatConversationViewController:UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        generateAccessibilityIdentifiers()
-
+        tableViewInitialization()
         removeObservers()
 
 //        chatListTableView.refreshControl = self.refreshControl
@@ -249,23 +248,15 @@ class NewChatConversationViewController:UIViewController {
         // storing original frame of main view
         originalViewFrame = self.view.frame
         
-        tableViewInitialization()
+//        tableViewInitialization()
 
         
         searchBarHeightConstraint.constant = 0 // by default 56
         searchBarViewHeightConstraint.constant = 0 // by default 60
         let textFieldInsideSearchBar = searchBar.value(forKey: "searchField") as? UITextField
         textFieldInsideSearchBar?.textColor = UIColor.white
-        textFieldInsideSearchBar?.accessibilityIdentifier = "newChatConversationViewController_textFieldInsideSearchBar"
         
-        if let clearButton =  textFieldInsideSearchBar?.value(forKey: "clearButton") as? UIButton
-        {
-            clearButton.accessibilityIdentifier = "NewChatConversationViewController_clearButton"
-        }
 
-        if let buttonItem = searchBar.subviews.first?.subviews.last as? UIButton {
-            buttonItem.accessibilityIdentifier = "NewChatConversationViewController_cancelButton"
-        }
         
         previewImageView.contentMode = .scaleAspectFit
         previewImageView.layer.masksToBounds = true
@@ -289,8 +280,7 @@ class NewChatConversationViewController:UIViewController {
     }
     
     func callMessageTable(){
-//        guard let currentUserId =  UserDefaults.standard.value(forKey: "currentFireUserId") else {return}
-        let currentUserId = ""//sss
+        let currentUserId:String =  UserDefaults.standard.value(forKey: "currentUserFireId") as? String ?? ""
         if currentUserId == "" {
             return
         }
@@ -343,7 +333,6 @@ class NewChatConversationViewController:UIViewController {
                     UIView.performWithoutAnimation {
                         DispatchQueue.main.async {
                             self.chatListTableView.reloadData()
-    //                                self.chatListTableView.layoutIfNeeded()
                             if self.isEditMessage == false{
                                 self.scrollToBottom()
                             }
@@ -395,8 +384,7 @@ class NewChatConversationViewController:UIViewController {
       
         UserDefaults.standard.set(false, forKey: "noLongerPopupAlreadyShown")
                 
-        //guard let currentUserId =  UserDefaults.standard.value(forKey: "currentFireUserId") else {return}
-        let currentUserId = ""//sss
+        let currentUserId:String =  UserDefaults.standard.value(forKey: "currentUserFireId") as? String ?? ""
         if currentUserId == "" {
             return
         }
@@ -619,8 +607,7 @@ class NewChatConversationViewController:UIViewController {
     
     fileprivate func loadChatConversation(){
         
-//        guard let currentUserId =  UserDefaults.standard.value(forKey: "currentFireUserId") else {return}
-        let currentUserId = ""//sss
+        let currentUserId:String =  UserDefaults.standard.value(forKey: "currentUserFireId") as? String ?? ""
         if currentUserId == "" {
             return
         }
@@ -647,14 +634,6 @@ class NewChatConversationViewController:UIViewController {
                     self.isOnlineFlag = UserDefaults.standard.bool(forKey: "FirToOnline")
                 }
 
-                /*for member in allList{
-                    guard let selectedToChatId = member.toChatId else {return}
-                    if selectedToChatId == toChatId{
-                        self.userObj = member
-                        UserDefaults.standard.set(member.online, forKey: "FirToOnline")
-                        self.isOnlineFlag = UserDefaults.standard.bool(forKey: "FirToOnline")
-                    }
-                }*/
                 
                 if self.isFromNewGroupChat ?? false{
                     self.isGroupConversation = self.userObj?.isgroup ?? true
@@ -695,8 +674,7 @@ class NewChatConversationViewController:UIViewController {
     
     func setAsRead(userObj: ChatConversation?, readFlag:Bool, seenCount:String?, comingFrom: String?, handler: @escaping(_ success: Bool) ->()){
         
-        //guard let currentUserId =  UserDefaults.standard.value(forKey: "currentFireUserId") else {return}
-        let currentUserId = ""//sss
+        let currentUserId:String =  UserDefaults.standard.value(forKey: "currentUserFireId") as? String ?? ""
         if currentUserId == "" {
             return
         }
@@ -774,8 +752,7 @@ class NewChatConversationViewController:UIViewController {
                 }
             }
         }else{
-            //guard let currentUserId =  UserDefaults.standard.value(forKey: "currentFireUserId") else {return}
-            let currentUserId = "" //sss
+            let currentUserId:String =  UserDefaults.standard.value(forKey: "currentUserFireId") as? String ?? ""
             if currentUserId == "" {
                 return
             }
@@ -1308,8 +1285,7 @@ extension NewChatConversationViewController: UITableViewDelegate, UITableViewDat
             
             if indexPath.section <= dateKeysArr.count-1{
                 
-                //let currentUserFireId:String =  UserDefaults.standard.value(forKey: "currentFireUserId") as? String ?? ""
-                let currentUserFireId = ""//sss
+                let currentUserFireId:String =  UserDefaults.standard.value(forKey: "currentUserFireId") as? String ?? ""
                 if currentUserFireId != ""{
                     if indexPath.row < (msgDateDict[dateKeysArr[indexPath.section]])?.count ?? 0{
                         let fromId = (msgDateDict[dateKeysArr[indexPath.section]])![indexPath.row].from_id
@@ -1500,51 +1476,50 @@ extension NewChatConversationViewController: UITableViewDelegate, UITableViewDat
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         if tableView == chatListTableView {
-            
-            if indexPath.section <= dateKeysArr.count-1{
-                //let currentUserFireId:String =  UserDefaults.standard.value(forKey: "currentFireUserId") as? String ?? ""
-                let currentUserFireId = ""//sss
-                if indexPath.row < (msgDateDict[dateKeysArr[indexPath.section]])?.count ?? 0{
-                    let fromId = (msgDateDict[dateKeysArr[indexPath.section]])![indexPath.row].from_id
-                    
-                    if fromId == "notifyMsg" {
-                        if indexPath.row > 0{
-                            if (msgDateDict[dateKeysArr[indexPath.section]])![indexPath.row].payload != ""{
-                                return UITableView.automaticDimension
-                            }else{
-                                return 0
-                            }
-                        }else{
-                            if (msgDateDict[dateKeysArr[indexPath.section]])![indexPath.row].payload != ""{
-                                return UITableView.automaticDimension
-                            }else{
-                                return 0
-                            }
-                        }
-                    }
-                    
-                    
-                    if fromId != currentUserFireId{
-                        let messageType = (msgDateDict[dateKeysArr[indexPath.section]])![indexPath.row].message_type
-                        if messageType == "image" || messageType == "gif" || messageType == "attachment" || messageType == "audio" || messageType == "video"{
-                            
-                            if (msgDateDict[dateKeysArr[indexPath.section]])![indexPath.row].isFileUploadedOnAWS ?? false{
-                                return UITableView.automaticDimension
-                            }else{
-                                return 0
-                            }
-                        }else{
-                            return UITableView.automaticDimension
-                        }
-                    }else{
-                        return UITableView.automaticDimension
-                    }
-                }else{
-                    return 0
-                }
-            }else{
-                return UITableView.automaticDimension
-            }
+            return UITableView.automaticDimension
+//            if indexPath.section <= dateKeysArr.count-1{
+//                let currentUserFireId:String =  UserDefaults.standard.value(forKey: "currentUserFireId") as? String ?? ""
+//                if indexPath.row < (msgDateDict[dateKeysArr[indexPath.section]])?.count ?? 0{
+//                    let fromId = (msgDateDict[dateKeysArr[indexPath.section]])![indexPath.row].from_id
+//
+//                    if fromId == "notifyMsg" {
+//                        if indexPath.row > 0{
+//                            if (msgDateDict[dateKeysArr[indexPath.section]])![indexPath.row].payload != ""{
+//                                return UITableView.automaticDimension
+//                            }else{
+//                                return 0
+//                            }
+//                        }else{
+//                            if (msgDateDict[dateKeysArr[indexPath.section]])![indexPath.row].payload != ""{
+//                                return UITableView.automaticDimension
+//                            }else{
+//                                return 0
+//                            }
+//                        }
+//                    }
+//
+//
+//                    if fromId != currentUserFireId{
+//                        let messageType = (msgDateDict[dateKeysArr[indexPath.section]])![indexPath.row].message_type
+//                        if messageType == "image" || messageType == "gif" || messageType == "attachment" || messageType == "audio" || messageType == "video"{
+//
+//                            if (msgDateDict[dateKeysArr[indexPath.section]])![indexPath.row].isFileUploadedOnAWS ?? false{
+//                                return UITableView.automaticDimension
+//                            }else{
+//                                return 0
+//                            }
+//                        }else{
+//                            return UITableView.automaticDimension
+//                        }
+//                    }else{
+//                        return UITableView.automaticDimension
+//                    }
+//                }else{
+//                    return 0
+//                }
+//            }else{
+//                return UITableView.automaticDimension
+//            }
          }else{
             return 50
          }
@@ -1566,7 +1541,10 @@ extension NewChatConversationViewController: UITableViewDelegate, UITableViewDat
         if tableView == chatListTableView {
 
             if section > dateKeysArr.count-1 {
-                guard let noMemberCell = tableView.dequeueReusableCell(withIdentifier: "MemberOfflineMessageCell") as? MemberOfflineMessageTableViewCell else {return UITableViewCell()}
+                guard let noMemberCell = tableView.dequeueReusableCell(withIdentifier: "MemberOfflineMessageCell") as? MemberOfflineMessageTableViewCell else
+                {
+                    return UITableViewCell()
+                }
 
                 noMemberCell.shadowForCornerView()
                 noMemberCell.selectionStyle = .none
