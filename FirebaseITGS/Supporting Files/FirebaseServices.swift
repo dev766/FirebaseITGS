@@ -137,13 +137,14 @@ class FirebaseService {
                         
                         let id = contactsData["uuid"] as? String ?? ""
                         
-                        let currentUserId = "currentFireUserId"
-                        if currentUserId == "" {
+                        let currentUserId = UserDefaults.standard.value(forKey: Constant.UserDefaultKeys.cuurentFirId) as? String
+                        if currentUserId == "" && currentUserId == nil{
                             return
                         }
                         if id == currentUserId as? String ?? ""  {
-                            UserDefaults.standard.set(decryptedName, forKey: "fireUserName")
-                            UserDefaults.standard.set(contactsData["uuid"] as? String ?? "", forKey: "fireUserId")
+                            UserDefaults.standard.set(decryptedEmpId, forKey: Constant.UserDefaultKeys.empId)
+                            UserDefaults.standard.set(decryptedName, forKey: Constant.UserDefaultKeys.fullName)
+                            UserDefaults.standard.set(contactsData["uuid"] as? String ?? "", forKey: Constant.UserDefaultKeys.cuurentFirId)
                             UserDefaults.standard.synchronize()
                         }else{
                             self.fireBaseUserList.append(user)

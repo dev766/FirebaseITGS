@@ -164,7 +164,7 @@ class HomeViewController: UIViewController {
                 print("login SuccessFully")
                 UserDefaults.standard.set("WLRZzIyxLAU6Z2qrLGhpcHvVWT23", forKey: "currentUserFireId")
             }else {
-                UserDefaults.standard.set("WLRZzIyxLAU6Z2qrLGhpcHvVWT23", forKey: "currentUserFireId")
+                UserDefaults.standard.set("WLRZzIyxLAU6Z2qrLGhpcHvVWT23", forKey: Constant.UserDefaultKeys.cuurentFirId)
             }
         })
     }
@@ -218,37 +218,8 @@ class HomeViewController: UIViewController {
     }
     
     func loadUsers() {
-        chatUserRefrance = firebaseService.databaseUsers()
-        chatUserRefrance.keepSynced(true)
-        chatUserRefrance.observeSingleEvent(of: .value) { (snapshot) in
-            if let userSnapshot = snapshot.value {
-                self.friendList = userSnapshot as! [String: Any]
-                let currentUserId:String =  UserDefaults.standard.value(forKey: "currentUserFireId") as? String ?? ""
-                if currentUserId == "" {
-                    print("current User id nil")
-                    return
-                }
-
-                let currentUser = self.friendList[currentUserId] as! [String: Any]
-                let currentEmpId = currentUser["emp_id"] as! String
-                UserDefaults.standard.set(currentEmpId, forKey: "currentUserEmpID")
-                for indexx in 0...(self.friendList.count - 1) {
-                    let index = self.friendList.index(self.friendList.startIndex, offsetBy: indexx)
-                    let key = self.friendList.keys[index]
-                    
-                    if let value = self.friendList[key] as? [String: Any] {
-                        
-                        if let uuid = value["uuid"] as? String, let name = value["name"] as? String {
-                            let user = User(UUID: uuid, deviceToken: "", name: name, online: "", image: "", emp_id: "", isSelected: false, deviceType: "", knownAs: "", empStatus: "")
-                            self.users.append(user)
-                        } else {
-                            let user = User(UUID: value["uuid"] as? String ?? "null", deviceToken: "", name: value["name"] as? String ?? "null", online: "", image: "", emp_id: "", isSelected: false, deviceType: "", knownAs: "", empStatus: "")
-                            self.users.append(user)
-                        }
-                    }
-                }
-                
-            }
+        firebaseService.fetchUserFromFireBase { users in
+            self.users = users
         }
     }
 

@@ -86,7 +86,7 @@ class ReceiverCellTableViewCell: UITableViewCell {
             }
             
             finalAttributedStr.addAttribute(NSAttributedString.Key.font, value: UIFont(name: "Roboto-Regular", size: 17.0)!, range: NSRange(location:0,length:message.count))
-            messageLabel.attributedText = finalAttributedStr
+            messageLabel.text = message + "                   "
         }
         
         userImageView.layer.cornerRadius = userImageView.bounds.height / 2

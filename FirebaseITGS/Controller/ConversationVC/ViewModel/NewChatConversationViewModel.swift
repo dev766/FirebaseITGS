@@ -710,8 +710,11 @@ class NewChatConversationViewModel {
         if loginUserID == "" {
             return
         }
-        let firstNameIs = UserDefaults.standard.value(forKey: "FirstName") as! [String]
-        let userFullName = firstNameIs.first!.getFullName(lastName: (UserDefaults.standard.value(forKey: "LastName") as? [String])!)
+//        let firstNameIs = UserDefaults.standard.value(forKey: "FirstName") as! [String]
+//        let userFullName = firstNameIs.first!.getFullName(lastName: (UserDefaults.standard.value(forKey: "LastName") as? [String])!)
+        
+        let userFullName = UserDefaults.standard.value(forKey: Constant.UserDefaultKeys.fullName) as! String
+        
         guard let toUserId = UserDefaults.standard.value(forKey: "FirToUserId") as? String else {return}
         var key = ""
 
@@ -782,8 +785,11 @@ class NewChatConversationViewModel {
         }
         
         // UnArchive Conversation
-        let firstNameIs = UserDefaults.standard.value(forKey: "FirstName") as! [String]
-        let fromUserFullName = firstNameIs.first!.getFullName(lastName: (UserDefaults.standard.value(forKey: "LastName") as? [String])!)
+//        let firstNameIs = UserDefaults.standard.value(forKey: "FirstName") as! [String]
+//        let fromUserFullName = firstNameIs.first!.getFullName(lastName: (UserDefaults.standard.value(forKey: "LastName") as? [String])!)
+        
+        let fromUserFullName = UserDefaults.standard.value(forKey: Constant.UserDefaultKeys.fullName) as! String
+        
         let fromEmpName = fromUserFullName
         
         guard let toEmpName = UserDefaults.standard.value(forKey: "FirToUserName") as? String else {return}
