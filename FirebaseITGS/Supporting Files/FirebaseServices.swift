@@ -242,6 +242,70 @@ class FirebaseService {
             }
         }
     }
+    
+    func setAsMute( handler: @escaping(_ success: Bool) ->()){
+        
+        //////set isMute to touserId/currentuserId refereancer, mute should be updated in touser chat table so that he cant able to add msg in notification table as there is condition if mute then dont add entry in notification table
+        //guard let currentUserId =  UserDefaults.standard.value(forKey: "currentFireUserId") else {return}
+        let currentUserId = "WLRZzIyxLAU6Z2qrLGhpcHvVWT23"
+        if currentUserId == "" {
+            return
+        }
+        guard let toUsreId =  UserDefaults.standard.value(forKey: "FirToUserId") else {return}
+        
+        let muteConvRef = self.databaseChats1().child(currentUserId as! String).child(toUsreId as! String)
+        muteConvRef.keepSynced(true)
+        muteConvRef.observeSingleEvent(of: .value) { (snapshot) in
+            if snapshot.exists() {
+                if  let messageDict = snapshot.value as? [String: Any]{
+                    var isMute:String? = self.decryptTextMethod(text: messageDict["ismute"] as? String ?? "")
+                    if isMute == "true"{
+                        isMute = "false"
+                    }else{
+                        isMute = "true"
+                    }
+                    
+                    let ChatConv = ["ismute":isMute?.encryptMessage()] as [String : Any?]
+                    
+                    muteConvRef.updateChildValues(ChatConv as [AnyHashable : Any])
+                    muteConvRef.removeAllObservers()
+                    handler(true)
+                }
+            }else{
+                muteConvRef.removeAllObservers()
+            }
+        }
+    }
+    
+    func setMarkAsFavourite(userObj: ChatConversation?, handler: @escaping(_ success: Bool) ->()){
+        
+        //guard let currentUserId =  UserDefaults.standard.value(forKey: "currentFireUserId") else {return}
+        let currentUserId = "WLRZzIyxLAU6Z2qrLGhpcHvVWT23"
+        if currentUserId == "" {
+            return
+        }
+        guard let toUsreId =  UserDefaults.standard.value(forKey: "FirToUserId") else {return}
+        
+        var favourite:Bool = userObj?.isfavorite ?? false
+        let favouriteConvRef = self.databaseChats1().child(currentUserId as! String).child(toUsreId as! String)
+        favouriteConvRef.keepSynced(true)
+        favouriteConvRef.observeSingleEvent(of:.value) { (snapshot) in
+            if snapshot.exists() {
+                if  let messageDict = snapshot.value as? [String: Any]{
+                    favourite = messageDict["isfavorite"] as? Bool ?? false
+                    let lastMessageRef = self.databaseChats1().child(currentUserId as! String).child(toUsreId as! String)
+                    lastMessageRef.updateChildValues(["isfavorite": !favourite
+                        ] as [String : Any?] as [AnyHashable : Any])
+                   
+                    favouriteConvRef.removeAllObservers()
+                    handler(true)
+                }
+            }else{
+                favouriteConvRef.removeAllObservers()
+                handler(false)
+            }
+        }
+    }
 
 
 //MARK:- Auth Services

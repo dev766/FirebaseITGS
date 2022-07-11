@@ -35,7 +35,7 @@ class HomeViewController: UIViewController {
     var toUserObject:ChatConversation!
     var chatConversationViewModel = ChatConversationListViewModel()
     var isGroup = false
-
+    var userObject:ChatConversation!
 
 
     @IBOutlet weak var tableview: UITableView!
@@ -645,3 +645,233 @@ extension HomeViewController : UISearchBarDelegate  {
         }
     }
 }
+
+
+extension HomeViewController: chatOptionDelegate {
+    func dissmissedView() {
+    }
+    
+    func selectedItem(selectedOption: ChatOptionTypeModel,userObj: ChatConversation?) {
+        userObject = userObj
+//        let mainStoryboard = UIStoryboard(name: Constant.StoryBoardIdentifier.chat, bundle: nil)
+        
+        switch selectedOption.cellType {
+        case .addPeople:
+            print("add people")
+//            self.groupMembers = []
+//            isGroup = userObj?.isgroup ?? false
+//
+////            self.allMessages = []
+////            self.allMessagesKeyArr = []
+////            self.newChatConversationViewModel.loadAllMessagesGroups(){ (mesages,msgKey) in
+////                self.allMessages = mesages
+////                self.allMessagesKeyArr = msgKey
+////            }
+//
+//            if isGroup{
+//                self.newChatConversationViewModel.getGroupMembersOfGroupForAddpeople(){ (GrpMembers) in
+//                    self.groupMembers = GrpMembers
+//
+//                    if self.groupMembers.count > 0{
+//                        if let controller = mainStoryboard.instantiateViewController(withIdentifier: Constant.ViewControllerIdentifier.addPeopleViewController) as? AddPeopleViewController {
+//
+//                            controller.groupMembers = self.groupMembers
+//                            controller.userObj = userObj
+//                            controller.delegate = self
+//                            self.title = ""
+//                            self.navigationController?.pushViewController(controller, animated: false)
+//                        }
+//                    }
+//                }
+//            }
+//            else{
+//                guard let toUserID = UserDefaults.standard.value(forKey: "FirToUserId") else{return}
+//                guard let name = UserDefaults.standard.value(forKey: "FirToUserName") else{return}
+//                var groupMember:Array = [Any]()
+//
+//                let groupDict:NSMutableDictionary = [:]
+//                groupDict.setValue(toUserID, forKey: "groupMemberId")
+//                groupDict.setValue(name, forKey: "name")
+//                groupMember.append(groupDict)
+//
+//                isConvertingSingleChatToGroup = "YES"
+//                let mainStoryboard: UIStoryboard = UIStoryboard(name: Constant.StoryBoardIdentifier.chat, bundle: nil)
+//                let newGroupChat : NewGroupChatViewController = (mainStoryboard.instantiateViewController(withIdentifier: Constant.ViewControllerIdentifier.newGroupChatViewController) as?  NewGroupChatViewController)!
+//                newGroupChat.comingFrom = "addPeople"
+//                newGroupChat.delegate = self
+//                newGroupChat.groupMembers = groupMember
+//                self.present(newGroupChat, animated: true, completion: nil)
+//
+//            }
+            break
+            
+        case .markFavorite:
+            print("Mark as Fav")
+            firebaseService.setMarkAsFavourite(userObj: userObj){ (success) in
+                if success {
+                    self.loadChatConversation()
+                }
+            }
+            
+            break
+            
+        case .mute:
+            print("Mark as Mute")
+            firebaseService.setAsMute(){ (success) in
+                if success {
+                    self.loadChatConversation()
+                }
+            }
+            break
+        case .markUnread:
+            
+//            newChatConversationViewModel.clearNotificationOfToChatUser() ////if userid which you are going to make read/unread has notification then clear them
+//
+//
+            print("Mark as unread")
+////            guard let currentUserId =  UserDefaults.standard.value(forKey: "currentFireUserId") else {return}
+//            let currentUserId = Preferences.currentFireUserId ?? ""
+//            if currentUserId == "" {
+//                return
+//            }
+//            guard let toUsreId =  UserDefaults.standard.value(forKey: "FirToUserId") else {return}
+//
+//            if userObj?.isgroup == true{
+//                let messageListWithoutNotifiyMsg = self.allMessages.filter({$0.from_id != "notifyMsg"})
+//                //guard let loginUserID = UserDefaults.standard.value(forKey: "currentFireUserId") else{return}
+//                let loginUserID = Preferences.currentFireUserId ?? ""
+//                if loginUserID == "" {
+//                    return
+//                }
+//                let receivedMessageList = messageListWithoutNotifiyMsg.filter({$0.from_id != loginUserID as? String ?? ""})
+//                if receivedMessageList.count > 0{
+//                    self.firebaseService.markAsUnread(userObj: userObj, readFlag:false, seenCount:"1", comingFrom: "option", comingFromVc: "chatConversation"){ (success) in
+//                        if success {
+//                            //                            self.loadChatConversation()
+//                        }
+//                    }
+//                }
+//
+//                /*self.allMessages = []
+//                self.allMessagesKeyArr = []
+//                self.newChatConversationViewModel.loadAllMessagesGroups(){ (mesages,msgKey) in
+//                    self.allMessages = mesages
+//                    self.allMessagesKeyArr = msgKey
+//                    let messageListWithoutNotifiyMsg = self.allMessages.filter({$0.from_id != "notifyMsg"})
+//                    guard let loginUserID = UserDefaults.standard.value(forKey: "currentFireUserId") else{return}
+//                    let receivedMessageList = messageListWithoutNotifiyMsg.filter({$0.from_id != loginUserID as? String ?? ""})
+//                    if receivedMessageList.count > 0{
+//                        self.firebaseService.markAsUnread(userObj: userObj, readFlag:false, seenCount:"1", comingFrom: "option", comingFromVc: "chatConversation"){ (success) in
+//                            if success {
+//                                //                            self.loadChatConversation()
+//                            }
+//                        }
+//                    }
+//                }*/
+//            }else{
+//                let _ = firebaseService.databaseMessages().child(currentUserId as! String).child(toUsreId as! String).queryOrdered(byChild: "from_id").queryEqual(toValue: toUsreId).queryLimited(toLast: 1).observe(.childAdded){
+//                 (snapshot) in
+//                    self.firebaseService.markAsUnread(userObj: userObj, readFlag:false, seenCount:"1", comingFrom: "option", comingFromVc: "chatConversation"){ (success) in
+//                        if success {
+//                            //                            self.loadChatConversation()
+//                        }
+//                    }
+//                }
+//
+////                self.newChatConversationViewModel.loadAllMessages(){ (mesages,msgKey) in
+////                    self.newChatConversationViewModel.messageRefSenderTest?.removeAllObservers()
+////                }
+//            }
+            
+            break
+        case .archive:
+            
+            firebaseService.setMarkAsArchive(userObj: userObj) { (success) in
+                if success {
+                    self.loadChatConversation()
+                    print("Reload Table")
+                }
+            }
+            
+            break
+        case .report:
+            print("report")
+//            if let controller = mainStoryboard.instantiateViewController(withIdentifier: Constant.ViewControllerIdentifier.reportPeopleViewController) as? ReportPeopleViewController {
+//                self.title = ""
+//                controller.userObject = userObj
+//                self.navigationController?.pushViewController(controller, animated: false)
+//            }
+            
+            break
+        case .removePeople:
+            print("removePeople")
+//            self.newChatConversationViewModel.getGroupMembersOfGroup(){ (GrpMembers) in
+//                self.groupMembers = GrpMembers
+//                if let controller = mainStoryboard.instantiateViewController(withIdentifier: Constant.ViewControllerIdentifier.removePeopleViewController) as? RemovePeopleViewController {
+//                    self.title = ""
+//                    controller.groupMembers = self.groupMembers
+//                    controller.userObj = userObj
+//                    controller.delegate = self
+//                    self.navigationController?.pushViewController(controller, animated: false)
+//                }
+//            }
+            
+            break
+        case .renameConversation:
+            print("renameConversation")
+//            if let controller = mainStoryboard.instantiateViewController(withIdentifier: Constant.ViewControllerIdentifier.newGroupChatViewController) as? NewGroupChatViewController {
+//                self.title = ""
+//                controller.title = Constant.DefaultText.renameGroupChat.localizedString
+//                controller.toRenameChat = true
+//                controller.renameObj = userObj
+//                self.present(controller, animated: true, completion: nil)
+//            }
+
+            break
+        case .notificationSetting:
+            print("notificationSetting")
+//            showNotificationOptions(userObj: userObj)
+            break
+        case .leave:
+            print("leave")
+//            popupFor = "Leave"
+//            self.showConfirmationPopup(withMessage: Constant.AlertMessages.leaveConversation.localizedString, cancelTitle: Constant.AlertMessages.no.localizedString, actionTitle: Constant.AlertMessages.yes.localizedString, actionTag: 0, isActionButton: true)
+            break
+        case .allActivity:
+            print("allActivity")
+//            firebaseService.setGroupAsMute(type:"allActivity"){ (success) in
+//                if success {
+////                    self.loadChatConversation()
+//                }
+//            }
+            break
+        case .onlyMentions:
+            print("onlyMentions")
+//            firebaseService.setGroupAsMute(type:"onlyMentions"){ (success) in
+//                if success {
+////                    self.loadChatConversation()
+//                }
+//            }
+            break
+        case .muteNotifications:
+            print("muteNotifications")
+//            firebaseService.setGroupAsMute(type:"muteNotifications"){ (success) in
+//                if success {
+////                    self.loadChatConversation()
+//                }
+//            }
+            break
+//        default:
+//            print("")
+        case .addNewTask:
+            break
+        case .showCompletedTask:
+            break
+        case .deleteTasksInBulk:
+            break
+        case .markCompletedInBulk:
+            break
+        }
+    }
+}
+
