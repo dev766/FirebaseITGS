@@ -24,6 +24,7 @@ class HomeViewController: UIViewController {
     var activeConversationList = [ChatConversation]()
     var allConversationList = [ChatConversation]()
     var favouriteUnArchivedConversationList = [ChatConversation]()
+    var favouriteAndConversationList = [ChatConversation]()
     var users = [User]()
     var seatchTextForSearching:String = ""
     var selectedfilter:String = ""
@@ -82,7 +83,7 @@ class HomeViewController: UIViewController {
         let allAction = UIAlertAction(title: "All", style: .default, handler: { (action) -> Void in
 //            self.changeImageOfFilterIcon(isApplied: false)
             self.selectedfilter = "All"
-            self.conversationList = self.unArchiveConversationList//self.allConversationList
+            self.conversationList = self.favouriteAndConversationList//self.unArchiveConversationList//self.allConversationList//
 //            self.fetchSliderData()
             self.tableview.reloadData()
         })
@@ -117,7 +118,7 @@ class HomeViewController: UIViewController {
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: {(action) -> Void in
 //            self.changeImageOfFilterIcon(isApplied: false)
             self.selectedfilter = ""
-            self.conversationList = self.unArchiveConversationList
+            self.conversationList = self.favouriteAndConversationList            //self.unArchiveConversationList
 //            self.fetchSliderData()
             self.tableview.reloadData()
 
@@ -189,9 +190,28 @@ class HomeViewController: UIViewController {
                     self.allConversationList = allList
                     self.favouriteUnArchivedConversationList = favouriteUnArchivedConversationList
                     
+                    //create favourite plus chat list
+                    let fav = self.chatConversationListViewModel.sortConversationByTimestamp(conversationlist: self.favouriteUnArchivedConversationList)
+                    if fav.count > 5{
+                        for index in 0...5 {
+                            self.favouriteAndConversationList.append(fav[index])
+                        }
+                    }else{
+                        self.favouriteAndConversationList = fav
+                    }
+                    
+                    for index in 0..<conversationList.count{
+                        if conversationList[index].isfavorite == true{
+                            
+                        }else{
+                            self.favouriteAndConversationList.append(conversationList[index])
+                        }
+                    }
+                    //end
+                    
                     if self.selectedfilter != ""{
                         if self.selectedfilter == "All"{
-                            self.conversationList = self.unArchiveConversationList //self.allConversationList
+                            self.conversationList = self.favouriteAndConversationList    //self.unArchiveConversationList //self.allConversationList
                         }else if self.selectedfilter == "Favorites"{
                             self.conversationList = self.favouriteConversationList
                         }else if self.selectedfilter == "Active"{
@@ -200,7 +220,7 @@ class HomeViewController: UIViewController {
                             self.conversationList = self.archiveConversationList
                         }
                     }else{
-                        self.conversationList = self.unArchiveConversationList
+                        self.conversationList = self.favouriteAndConversationList       //self.unArchiveConversationList
                     }
                     
                     self.tableview.reloadData()
