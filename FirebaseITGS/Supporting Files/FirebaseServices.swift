@@ -126,13 +126,16 @@ class FirebaseService {
                 for (_,value) in myContacts {
                     if let contactsData = value as? NSDictionary {
                         
-                        let decryptedName = (contactsData.value(forKey: "name") as? String ?? "").decryptMessage() ?? ""
+                        var decryptedName = (contactsData.value(forKey: "name") as? String ?? "").decryptMessage() ?? ""
                         let decrypteOnlineStatus = (contactsData.value(forKey: "online") as? String ?? "").decryptMessage() ?? ""
                         let decryptedImage = (contactsData.value(forKey: "image") as? String ?? "").decryptMessage() ?? ""
                         let decryptedEmpId = (contactsData.value(forKey: "emp_id") as? String ?? "").decryptMessage() ?? ""
                         let decryptedKnownAs = (contactsData.value(forKey: "knownAs") as? String ?? "").decryptMessage() ?? ""
                         let decryptedEmpStatus = (contactsData.value(forKey: "employeeStatus") as? String ?? "").decryptMessage() ?? ""
                         
+                        if decryptedName == "" {
+                            decryptedName = "user"
+                        }
                         let user = User(UUID: contactsData.value(forKey: "uuid") as? String ?? "", deviceToken: contactsData.value(forKey: "deviceToken") as? String ?? "", name: decryptedName, online: decrypteOnlineStatus, image: decryptedImage, emp_id: decryptedEmpId, isSelected: false, deviceType: contactsData.value(forKey: "deviceType") as? String ?? "", knownAs: decryptedKnownAs, empStatus: decryptedEmpStatus)
                         
                         let id = contactsData["uuid"] as? String ?? ""
@@ -192,7 +195,7 @@ class FirebaseService {
     
     func unArchiveChatConversation(handler: @escaping(_ success: Bool) ->()) {
         
-        let currentFirebaseUserId = ""//sss
+        let currentFirebaseUserId = UserDefaults.standard.value(forKey: "currentUserFireId") as? String ?? ""
         if currentFirebaseUserId == ""{
             print("Unarchiving Chat Conversation currentUserId nil in unarchiveChatConv method")
             handler(false)

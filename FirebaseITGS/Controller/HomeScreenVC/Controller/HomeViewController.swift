@@ -40,6 +40,7 @@ class HomeViewController: UIViewController {
 
     @IBOutlet weak var tableview: UITableView!
     @IBOutlet weak var searchbar: UISearchBar!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         loadNib()
@@ -47,6 +48,14 @@ class HomeViewController: UIViewController {
         setupFloatingButton()
         firebaseAuth()
         loadChatConversation()
+        loadUsers()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if Auth.auth().currentUser != nil {
+            loadChatConversation()
+        }
     }
     
     func setupFloatingButton(){
@@ -163,18 +172,22 @@ class HomeViewController: UIViewController {
     }
     
     func firebaseAuth() {
-        ChatAuthservice.shareInstance.emailLogin("sam2@gmail.com", password: "Password@1", fullName: "Sam2 Bhati", empId: 101, deviceToken: "aavvssyyddff", completion: { isSuccess, message in
+        ChatAuthservice.shareInstance.emailLogin("sam4@gmail.com", password: "Password@1", fullName: "akash pathil", empId: 101, deviceToken: "aavvssyyddff", completion: { isSuccess, message in
             if isSuccess {
                 print("login SuccessFully")
-                UserDefaults.standard.set("WLRZzIyxLAU6Z2qrLGhpcHvVWT23", forKey: "currentUserFireId")
+//                UserDefaults.standard.set("WLRZzIyxLAU6Z2qrLGhpcHvVWT23", forKey: "currentUserFireId")
             }else {
-                UserDefaults.standard.set("WLRZzIyxLAU6Z2qrLGhpcHvVWT23", forKey: Constant.UserDefaultKeys.cuurentFirId)
+                print("login failed")
+//                UserDefaults.standard.set("WLRZzIyxLAU6Z2qrLGhpcHvVWT23", forKey: Constant.UserDefaultKeys.cuurentFirId)
             }
         })
     }
     
     func loadChatConversation(){
-        let currentUserId = "WLRZzIyxLAU6Z2qrLGhpcHvVWT23"
+        let currentUserId:String =  UserDefaults.standard.value(forKey: "currentUserFireId") as? String ?? ""
+        if currentUserId == "" {
+            return
+        }
         chatUserRefrance = firebaseService.databaseChats1().child(currentUserId)
         chatUserRefrance.keepSynced(true)
         chatUserRefrance.observeSingleEvent(of: .value) { (snapshot) in

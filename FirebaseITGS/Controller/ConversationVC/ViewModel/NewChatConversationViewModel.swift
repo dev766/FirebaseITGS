@@ -794,7 +794,7 @@ class NewChatConversationViewModel {
         
         guard let toEmpName = UserDefaults.standard.value(forKey: "FirToUserName") as? String else {return}
         
-        guard let currentEmpID = UserDefaults.standard.value(forKey: "currentUserEmpID") as? Int else{ return }
+        guard let currentEmpID = UserDefaults.standard.value(forKey: "currentUserEmpID") as? String else{ return }
         
         guard let toEmpID = UserDefaults.standard.value(forKey: "ToEmployeeId") else{ return }
         
@@ -805,7 +805,7 @@ class NewChatConversationViewModel {
                 if success{
                 }
             }
-            self.getLastMessageOfConversationForSingleChat1(currentUserId: toUserId , toUsreId: loginUserID , toEmpName:fromEmpName, toEmpId:String(currentEmpID), lastMsg:lastMsg, MsgType:MsgType , msgsCount:msgsCount, messageKey:key){ (success) in
+            self.getLastMessageOfConversationForSingleChat1(currentUserId: toUserId , toUsreId: loginUserID , toEmpName:fromEmpName, toEmpId:currentEmpID, lastMsg:lastMsg, MsgType:MsgType , msgsCount:msgsCount, messageKey:key){ (success) in
                 if success{
                 }
             }

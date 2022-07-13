@@ -24,6 +24,8 @@ class DropDownViewController: UIViewController {
     var doneButton: UIBarButtonItem!
     let firebaseService = FirebaseService()
     var chatfilteredData: [User] = []
+    var searchFilterData: [User] = []
+    var isSearch = false
     
     weak var dropDownDelegate: DropDownUserModel?
     
@@ -36,7 +38,6 @@ class DropDownViewController: UIViewController {
             }
         }
     }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,7 +70,8 @@ class DropDownViewController: UIViewController {
     
     func loadUsers() {
         firebaseService.fetchUserFromFireBase { users in
-            self.chatfilteredData = users
+            let filteredUser = users.sorted{ $0.name?.localizedCaseInsensitiveCompare($1.name ?? "") == ComparisonResult.orderedAscending}
+            self.chatfilteredData = filteredUser
             DispatchQueue.main.async {
                 self.listTableView.reloadData()
             }
@@ -90,7 +92,7 @@ class DropDownViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
-    func setUpNewChatMemberCell(indexPath: IndexPath) ->  UITableViewCell {
+    func setUpNewChatMemberCell(indexPath: IndexPath, userData: [User]) ->  UITableViewCell {
         guard let cell = listTableView.dequeueReusableCell(withIdentifier: "NewChatMemberCell", for: indexPath) as? NewChatMemberTableViewCell else {return UITableViewCell()}
         
         cell.selectionStyle = .none
@@ -100,7 +102,7 @@ class DropDownViewController: UIViewController {
         }
         
         
-        if chatfilteredData[indexPath.row].isSelected ?? false {
+        if userData[indexPath.row].isSelected ?? false {
             if !cell.isSelected {
                 listTableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
                 DispatchQueue.main.async {
@@ -116,7 +118,7 @@ class DropDownViewController: UIViewController {
             }
         }
         
-        let model = chatfilteredData[indexPath.row]
+        let model = userData[indexPath.row]
         cell.setupCell(chatUser: model)
         return cell
     }
@@ -132,11 +134,21 @@ extension DropDownViewController: UISearchBarDelegate {
 extension DropDownViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return chatfilteredData.count
+        if isSearch {
+            return searchFilterData.count
+        }else {
+            return chatfilteredData.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = setUpNewChatMemberCell(indexPath: indexPath)
+        var userslist: [User] = []
+        if isSearch {
+           userslist = searchFilterData
+        }else {
+            userslist = chatfilteredData
+        }
+        let cell = setUpNewChatMemberCell(indexPath: indexPath, userData: userslist)
         return cell
     }
     
