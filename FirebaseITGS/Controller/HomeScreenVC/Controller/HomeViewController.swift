@@ -172,7 +172,7 @@ class HomeViewController: UIViewController {
     }
     
     func firebaseAuth() {
-        ChatAuthservice.shareInstance.emailLogin("sam4@gmail.com", password: "Password@1", fullName: "akash pathil", empId: 101, deviceToken: "aavvssyyddff", completion: { isSuccess, message in
+        ChatAuthservice.shareInstance.emailLogin("sam3@gmail.com", password: "Password@1", fullName: "sam2 bhati", empId: 101, deviceToken: "aavvssyyddff", completion: { isSuccess, message in
             if isSuccess {
                 print("login SuccessFully")
 //                UserDefaults.standard.set("WLRZzIyxLAU6Z2qrLGhpcHvVWT23", forKey: "currentUserFireId")
@@ -190,7 +190,10 @@ class HomeViewController: UIViewController {
         }
         chatUserRefrance = firebaseService.databaseChats1().child(currentUserId)
         chatUserRefrance.keepSynced(true)
-        chatUserRefrance.observeSingleEvent(of: .value) { (snapshot) in
+        chatUserRefrance.observe(.value) { snapshot in
+            print("")
+        }
+        chatUserRefrance.observe(.value) { (snapshot) in
             print(snapshot)
             if let globalsnapshot = snapshot.value as? NSDictionary {
                 self.globalsnapshot = globalsnapshot
