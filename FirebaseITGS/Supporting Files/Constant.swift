@@ -14,5 +14,8 @@ struct Constant {
         static let fullName = "currentUserFullName"
         static let empId = "currentUserEmpID"
         static let cuurentFirId = "currentUserFireId"
+        static let firToUserId = "FirToUserId"
+        static let firToUserName = "FirToUserName"
+        static let toEmpId = "ToEmployeeId"
     }
 }

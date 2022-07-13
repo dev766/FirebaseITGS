@@ -89,15 +89,14 @@ class NewChatMemberTableViewCell: UITableViewCell{
             }
         }
     }
-    func setupCell(chatUser: EmployeeDetailsList){
+    func setupCell(chatUser: User){
         
         // for remove people screen
-        if let userId = chatUser.employeeID {
+        if let userId = chatUser.UUID {
             removePeopleButton.tag = Int(userId) ?? 0
         }
         
-        let fname = chatUser.firstName?.replacingOccurrences(of: "@", with: "")
-        let fullName = fname?.getFullName(lastName: [chatUser.lastName!])
+        let fullName = chatUser.name
         if let name = fullName{
             memberNameLabel.text = name
         }
@@ -105,17 +104,16 @@ class NewChatMemberTableViewCell: UITableViewCell{
         self.memberImageView.layer.cornerRadius = self.memberImageView.bounds.height / 2
         self.memberImageView.clipsToBounds = true
         self.userNameImgLabel.isHidden = true
-        let profileURL = URL(string: chatUser.picture ?? "")
+        let profileURL = URL(string: chatUser.image ?? "")
         let defaultImg = profileURL?.lastPathComponent
 
-        if chatUser.picture != "" && defaultImg != "defaultPictureV4.png"{
-            self.memberImageView.setImage(link: chatUser.picture ?? "", imageType: .UserImage)
+        if chatUser.image != "" && defaultImg != "defaultPictureV4.png"{
+            self.memberImageView.setImage(link: chatUser.image ?? "", imageType: .UserImage)
         }else{
             let name =  fullName ?? ""
             
             self.memberImageView.setImageForName(name, backgroundColor:nil, circular: true, textAttributes: nil)
 
-            self.userNameImgLabel.accessibilityIdentifier = "newChatMemberTableViewCell_userNameImg"
         }
         
     }

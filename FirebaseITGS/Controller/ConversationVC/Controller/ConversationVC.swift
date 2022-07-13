@@ -1406,7 +1406,7 @@ extension NewChatConversationViewController: UITableViewDelegate, UITableViewDat
             cell.borderLineView.isHidden = true
             let model = userfilteredData[indexPath.row]
 
-            cell.setupCell(chatUser: model)
+//            cell.setupCell(chatUser: model)
             return cell
         }
        

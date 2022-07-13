@@ -1,0 +1,162 @@
+//
+//  DropDownVC.swift
+//  FirebaseITGS
+//
+//  Created by S.S Bhati on 12/07/22.
+//
+
+import UIKit
+
+protocol DropDownUserModel: AnyObject{
+    func selectedUser(user: User)
+}
+
+class DropDownViewController: UIViewController {
+    
+    @IBOutlet weak var navBar: UINavigationBar!
+    
+    @IBOutlet weak var searchBar: UISearchBar!
+    
+    @IBOutlet weak var listTableView: UITableView!
+    
+    @IBOutlet weak var noUserView: UIView!
+    
+    var doneButton: UIBarButtonItem!
+    let firebaseService = FirebaseService()
+    var chatfilteredData: [User] = []
+    
+    weak var dropDownDelegate: DropDownUserModel?
+    
+    var selectedUser: User? {
+        didSet {
+            if selectedUser?.isSelected ?? false {
+                doneButton.isEnabled = true
+            } else {
+                doneButton.isEnabled = false
+            }
+        }
+    }
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setNavigationBar()
+        setupSearchBar()
+        loadNib()
+        loadUsers()
+    }
+
+    func setNavigationBar() {
+        let navItem = UINavigationItem(title: "Add People")
+        doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
+        let backButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(backButtonPressed))
+        navItem.rightBarButtonItem = doneButton
+        navItem.leftBarButtonItem = backButton
+        doneButton.isEnabled = false
+        navBar.setItems([navItem], animated: false)
+    }
+    
+    func setupSearchBar() {
+        searchBar.placeholder = "Search"
+        searchBar.setImage(UIImage(named: "SearchIcon"), for: UISearchBar.Icon.search, state: UIControl.State.normal);
+        searchBar.contentMode = .scaleAspectFit
+        searchBar.delegate = self
+    }
+    
+    func loadNib() {
+        listTableView.register(UINib(nibName:"NewChatMemberTableViewCell", bundle: nil), forCellReuseIdentifier:"NewChatMemberCell")
+    }
+    
+    func loadUsers() {
+        firebaseService.fetchUserFromFireBase { users in
+            self.chatfilteredData = users
+            DispatchQueue.main.async {
+                self.listTableView.reloadData()
+            }
+        }
+    }
+    
+    @objc func done() {
+        if selectedUser != nil && selectedUser?.isSelected ?? false {
+            guard let user = selectedUser else {
+                return
+            }
+            dropDownDelegate?.selectedUser(user: user)
+            self.dismiss(animated: true, completion: nil)
+        }
+    }
+    
+    @objc func backButtonPressed() {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    func setUpNewChatMemberCell(indexPath: IndexPath) ->  UITableViewCell {
+        guard let cell = listTableView.dequeueReusableCell(withIdentifier: "NewChatMemberCell", for: indexPath) as? NewChatMemberTableViewCell else {return UITableViewCell()}
+        
+        cell.selectionStyle = .none
+
+        DispatchQueue.main.async {
+            cell.checkUncheckImageView.image = UIImage(named: "CircleUnselect")
+        }
+        
+        
+        if chatfilteredData[indexPath.row].isSelected ?? false {
+            if !cell.isSelected {
+                listTableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
+                DispatchQueue.main.async {
+                    cell.checkUncheckImageView.image = UIImage(named: "CircleSelect")
+                }
+            }
+        } else {
+            if cell.isSelected {
+                DispatchQueue.main.async {
+                    cell.checkUncheckImageView.image = UIImage(named: "CircleSelect")
+                }
+                listTableView.deselectRow(at: indexPath, animated: false)
+            }
+        }
+        
+        let model = chatfilteredData[indexPath.row]
+        cell.setupCell(chatUser: model)
+        return cell
+    }
+
+
+}
+
+//MARK:- SearchBar Delegate Methods
+extension DropDownViewController: UISearchBarDelegate {
+    
+}
+
+extension DropDownViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return chatfilteredData.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = setUpNewChatMemberCell(indexPath: indexPath)
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 80
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        chatfilteredData[indexPath.row].isSelected = !(chatfilteredData[indexPath.row].isSelected ?? false)
+        selectedUser = chatfilteredData[indexPath.row]
+        DispatchQueue.main.async {
+            self.listTableView.reloadData()
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        chatfilteredData[indexPath.row].isSelected = false
+        selectedUser = chatfilteredData[indexPath.row]
+        DispatchQueue.main.async {
+            self.listTableView.reloadData()
+        }
+    }
+}

@@ -156,7 +156,10 @@ class HomeViewController: UIViewController {
     }
     
     @objc func plusButtonClick(sender : UIButton) {
-        print("add button press")
+        let controller = (self.storyboard?.instantiateViewController(identifier: "DropDownViewController")) as! DropDownViewController
+        controller.modalPresentationStyle = .fullScreen
+        controller.dropDownDelegate = self
+        self.present(controller, animated: true, completion: nil)
     }
     
     func firebaseAuth() {
@@ -875,3 +878,19 @@ extension HomeViewController: chatOptionDelegate {
     }
 }
 
+extension HomeViewController: DropDownUserModel {
+    func selectedUser(user: User) {
+        if let empId = user.emp_id{
+            print(empId)
+            if let controller = (self.storyboard?.instantiateViewController(identifier: "NewChatConversationViewController")) as? NewChatConversationViewController {
+                controller.isFromDropDownVC = true
+                self.title = ""
+                UserDefaults.standard.setValue(user.UUID, forKey: Constant.UserDefaultKeys.firToUserId)
+                let fullName = user.name
+                UserDefaults.standard.setValue(fullName, forKey: Constant.UserDefaultKeys.firToUserName)
+                UserDefaults.standard.setValue(user.emp_id, forKey: Constant.UserDefaultKeys.toEmpId)
+                self.navigationController?.pushViewController(controller, animated: false)
+            }
+        }
+    }
+}
