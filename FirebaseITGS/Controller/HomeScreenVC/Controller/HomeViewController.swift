@@ -43,19 +43,17 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        initRefreshControl()
         loadNib()
         searchbar.delegate = self
         setupFloatingButton()
         firebaseAuth()
-        loadChatConversation()
         loadUsers()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if Auth.auth().currentUser != nil {
-            loadChatConversation()
-        }
+
     }
     
     func setupFloatingButton(){
@@ -164,6 +162,28 @@ class HomeViewController: UIViewController {
         
     }
     
+    func removeRefreshControl() {
+//        self.refreshControl = nil
+        
+        tableview.refreshControl = nil
+
+//        refreshControl.endRefreshing()
+    }
+    
+    func initRefreshControl() {
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl.addTarget(self, action: #selector(refreshTableview(_:)), for: .valueChanged)
+
+        self.tableview.refreshControl = self.refreshControl
+    }
+    
+    @objc func refreshTableview(_ refreshControl: UIRefreshControl){
+        refreshControl.beginRefreshing()
+        loadChatConversation()
+        tableview.reloadData()
+        refreshControl.endRefreshing()
+    }
+    
     @objc func plusButtonClick(sender : UIButton) {
         let controller = (self.storyboard?.instantiateViewController(identifier: "DropDownViewController")) as! DropDownViewController
         controller.modalPresentationStyle = .fullScreen
@@ -172,10 +192,12 @@ class HomeViewController: UIViewController {
     }
     
     func firebaseAuth() {
-        ChatAuthservice.shareInstance.emailLogin("sam3@gmail.com", password: "Password@1", fullName: "sam2 bhati", empId: 101, deviceToken: "aavvssyyddff", completion: { isSuccess, message in
+        ChatAuthservice.shareInstance.emailLogin("sam4@gmail.com", password: "Password@1", fullName: "akash patil", empId: 101, deviceToken: "aavvssyyddff", completion: { isSuccess, message in
+//      ChatAuthservice.shareInstance.emailLogin("sam3@gmail.com", password: "Password@1", fullName: "sam2 bhati", empId: 101, deviceToken: "aavvssyyddff", completion: { isSuccess, message in
             if isSuccess {
                 print("login SuccessFully")
 //                UserDefaults.standard.set("WLRZzIyxLAU6Z2qrLGhpcHvVWT23", forKey: "currentUserFireId")
+                self.loadChatConversation()
             }else {
                 print("login failed")
 //                UserDefaults.standard.set("WLRZzIyxLAU6Z2qrLGhpcHvVWT23", forKey: Constant.UserDefaultKeys.cuurentFirId)
@@ -415,11 +437,11 @@ extension HomeViewController:UITableViewDataSource,UITableViewDelegate{
         }else if isSearch && filterConversationList.count > 1{
         
         
-        }else if self.conversationList.count > 1{
+        }else if self.conversationList.count > 0{
             
             if !(conversationList[indexPath.row].isremoved ?? false){
                                             
-//                            self.newChatConversationViewModel.getGroupMembersOfGroup(){ (GrpMembers) in
+//                             self.newChatConversationViewModel.getGroupMembersOfGroup(){ (GrpMembers) in
 //                                self.groupMembers = GrpMembers
 //                            }
                         
@@ -521,11 +543,11 @@ extension HomeViewController : UISearchBarDelegate  {
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         
-//        self.removeRefreshControl()
+        self.removeRefreshControl()
     }
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-//        self.initRefreshControl()
+        self.initRefreshControl()
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
