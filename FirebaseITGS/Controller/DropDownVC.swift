@@ -61,6 +61,7 @@ class DropDownViewController: UIViewController {
         searchBar.placeholder = "Search"
         searchBar.setImage(UIImage(named: "SearchIcon"), for: UISearchBar.Icon.search, state: UIControl.State.normal);
         searchBar.contentMode = .scaleAspectFit
+        searchBar.searchTextField.clearButtonMode = .never
         searchBar.delegate = self
     }
     
@@ -131,7 +132,7 @@ extension DropDownViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
-        if searchText.count >= 3 || searchText.count == 0{
+        if searchText.count > 0 || searchText.count == 0{
             
             if searchText.count == 0{
                 isSearch = false
