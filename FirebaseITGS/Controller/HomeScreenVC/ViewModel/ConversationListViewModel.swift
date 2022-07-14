@@ -257,7 +257,7 @@ class ChatConversationListViewModel {
          optionArray.append(ChatOptionTypeModel(optionImage: "renameChatConversation", optionName:"Rename Conversation", cellType: .renameConversation))
          optionArray.append(ChatOptionTypeModel(optionImage: "Alerts", optionName: "Notification Setting", cellType: .notificationSetting))
          if isFavourite ?? false {
-             optionArray.append(ChatOptionTypeModel(optionImage: "Mark-as-favorite", optionName: "Mark as Unfavorite" , cellType: .markFavorite))
+             optionArray.append(ChatOptionTypeModel(optionImage: "Mark-as-favorite", optionName: "Remove from favorite" , cellType: .markFavorite))
          }else{
              optionArray.append(ChatOptionTypeModel(optionImage: "Mark-as-favorite", optionName: "Mark as favorite" , cellType: .markFavorite))
          }
@@ -284,7 +284,7 @@ class ChatConversationListViewModel {
          
          optionArray.append(ChatOptionTypeModel(optionImage: "Add-people", optionName:"Add people" , cellType: .addPeople))
          if isFavourite ?? false {
-             optionArray.append(ChatOptionTypeModel(optionImage: "Mark-as-favorite", optionName: "Mark as Unfavorite" , cellType: .markFavorite))
+             optionArray.append(ChatOptionTypeModel(optionImage: "Mark-as-favorite", optionName: "Remove from favorite" , cellType: .markFavorite))
          }else{
              optionArray.append(ChatOptionTypeModel(optionImage: "Mark-as-favorite", optionName: "Mark as favorite" , cellType: .markFavorite))
          }

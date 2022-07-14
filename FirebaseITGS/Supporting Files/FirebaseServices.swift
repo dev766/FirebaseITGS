@@ -216,11 +216,11 @@ class FirebaseService {
 
     func setMarkAsArchive(userObj: ChatConversation?, handler: @escaping(_ success: Bool) ->()){
         
-        //guard let currentUserId =  UserDefaults.standard.value(forKey: "currentFireUserId") else {return}
-        let currentUserId = "WLRZzIyxLAU6Z2qrLGhpcHvVWT23"
-        if currentUserId == "" {
-            return
-        }
+        guard let currentUserId =  UserDefaults.standard.value(forKey: "currentUserFireId") else {return}
+//        let currentUserId = "WLRZzIyxLAU6Z2qrLGhpcHvVWT23"
+//        if currentUserId == "" {
+//            return
+//        }
         guard let toUsreId =  UserDefaults.standard.value(forKey: "FirToUserId") else {return}
         
         var archived:Bool = userObj?.isarchived ?? false
@@ -249,11 +249,11 @@ class FirebaseService {
     func setAsMute( handler: @escaping(_ success: Bool) ->()){
         
         //////set isMute to touserId/currentuserId refereancer, mute should be updated in touser chat table so that he cant able to add msg in notification table as there is condition if mute then dont add entry in notification table
-        //guard let currentUserId =  UserDefaults.standard.value(forKey: "currentFireUserId") else {return}
-        let currentUserId = "WLRZzIyxLAU6Z2qrLGhpcHvVWT23"
-        if currentUserId == "" {
-            return
-        }
+        guard let currentUserId =  UserDefaults.standard.value(forKey: "currentUserFireId") else {return}
+//        let currentUserId = "WLRZzIyxLAU6Z2qrLGhpcHvVWT23"
+//        if currentUserId == "" {
+//            return
+//        }
         guard let toUsreId =  UserDefaults.standard.value(forKey: "FirToUserId") else {return}
         
         let muteConvRef = self.databaseChats1().child(currentUserId as! String).child(toUsreId as! String)
@@ -282,11 +282,11 @@ class FirebaseService {
     
     func setMarkAsFavourite(userObj: ChatConversation?, handler: @escaping(_ success: Bool) ->()){
         
-        //guard let currentUserId =  UserDefaults.standard.value(forKey: "currentFireUserId") else {return}
-        let currentUserId = "WLRZzIyxLAU6Z2qrLGhpcHvVWT23"
-        if currentUserId == "" {
-            return
-        }
+        guard let currentUserId =  UserDefaults.standard.value(forKey: "currentUserFireId") else {return}
+//        let currentUserId = "WLRZzIyxLAU6Z2qrLGhpcHvVWT23"
+//        if currentUserId == "" {
+//            return
+//        }
         guard let toUsreId =  UserDefaults.standard.value(forKey: "FirToUserId") else {return}
         
         var favourite:Bool = userObj?.isfavorite ?? false
