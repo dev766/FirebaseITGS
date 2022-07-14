@@ -129,6 +129,55 @@ class DropDownViewController: UIViewController {
 //MARK:- SearchBar Delegate Methods
 extension DropDownViewController: UISearchBarDelegate {
     
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        if searchText.count >= 3 || searchText.count == 0{
+            
+            if searchText.count == 0{
+                isSearch = false
+                searchBar.showsCancelButton = false
+            }else{
+                isSearch = true
+                searchBar.showsCancelButton = true
+            }
+            
+            self.updateDataAsPerChange(searchText: searchText)
+        }
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar){
+        isSearch = false
+        searchBar.showsCancelButton = false
+        if searchBar.text!.isEmpty{
+            
+        }else{
+            searchBar.text = ""
+            self.updateDataAsPerChange(searchText: "")
+        }
+    }
+    
+    
+    func updateDataAsPerChange(searchText:String){
+        
+        self.searchFilterData = []
+        
+        let filterList = chatfilteredData.filter({ (item) -> Bool in
+            let value: NSString = item.name! as NSString
+            return (value.range(of: searchText, options: .caseInsensitive).location != NSNotFound)
+        })
+        
+        self.searchFilterData = filterList
+        
+        if(searchText.count == 0){
+            isSearch = false
+        }else{
+            isSearch = true
+        }
+        DispatchQueue.main.async {
+            self.listTableView.reloadData()
+        }
+    }
+
 }
 
 extension DropDownViewController: UITableViewDelegate, UITableViewDataSource {
@@ -157,16 +206,30 @@ extension DropDownViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        chatfilteredData[indexPath.row].isSelected = !(chatfilteredData[indexPath.row].isSelected ?? false)
-        selectedUser = chatfilteredData[indexPath.row]
+        var userslist: [User] = []
+        if isSearch {
+           userslist = searchFilterData
+        }else {
+            userslist = chatfilteredData
+        }
+        
+        userslist[indexPath.row].isSelected = !(userslist[indexPath.row].isSelected ?? false)
+        selectedUser = userslist[indexPath.row]
         DispatchQueue.main.async {
             self.listTableView.reloadData()
         }
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        chatfilteredData[indexPath.row].isSelected = false
-        selectedUser = chatfilteredData[indexPath.row]
+        var userslist: [User] = []
+        if isSearch {
+           userslist = searchFilterData
+        }else {
+            userslist = chatfilteredData
+        }
+
+        userslist[indexPath.row].isSelected = false
+        selectedUser = userslist[indexPath.row]
         DispatchQueue.main.async {
             self.listTableView.reloadData()
         }
