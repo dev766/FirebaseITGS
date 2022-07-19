@@ -310,7 +310,91 @@ class FirebaseService {
         }
     }
 
+    func markAsUnread(userObj: ChatConversation?, readFlag:Bool,  seenCount:String?, comingFrom: String?, comingFromVc: String?, handler: @escaping(_ success: Bool) ->()){
+        
+        //guard let currentUserId =  UserDefaults.standard.value(forKey: "currentFireUserId") else {return}
+        guard let currentUserId =  UserDefaults.standard.value(forKey: "currentUserFireId") else {return}
+//        if currentUserId == "" {
+//            return
+//        }
+        guard let toUsreId =  UserDefaults.standard.value(forKey: "FirToUserId") else {return}
+        if !(toUsreId as? String ?? "").isEmpty{
+            var seenCount1 = seenCount
+            var readFlag1 = readFlag
+            if comingFromVc == "chatConversation"{
+                let currentReadFlag:Bool? = userObj?.isread
+                if currentReadFlag ?? false{
+                    seenCount1 = "1"
+                }else{
+                    seenCount1 = ""
+                }
+                readFlag1 = !currentReadFlag!
+            }
+            
+            ///Update Read flag in ChatConversation
+            let favouriteConvRef = self.databaseChats1().child(currentUserId as! String).child(toUsreId as! String)
+            favouriteConvRef.keepSynced(true)
+            favouriteConvRef.observe(.value) { (snapshot) in
+                if snapshot.exists() {
+                    if  (snapshot.value as? [String: Any]) != nil{
+                        let lastMessageRef = self.databaseChats1().child(currentUserId as! String).child(toUsreId as! String)
+                        
+                        lastMessageRef.updateChildValues([
+                            "seen":seenCount1,
+                                                          "isread": readFlag1,
+                            ] as [String : Any?] as [AnyHashable : Any])
+                        
+                        favouriteConvRef.removeAllObservers()
+                        handler(true)
+                    }
+                }else{
+                    handler(false)
+                }
+            }
+            
+            ////Set last msg as unread
+            if comingFrom == "option"{
+                ////Update read flag in Message
+                let msgref = self.databaseMessages().child(currentUserId as! String).child(toUsreId as! String)
+                let msgQuery = msgref.queryLimited(toLast: 1)
+                msgQuery.keepSynced(false)
+                msgQuery.observe(.value) { (snapshot) in
+                    if snapshot.exists() {
+                        let messageDict = snapshot.value as! [String: Any]
+                        for(key,_) in messageDict {
+                            let MessageRef = self.databaseMessages().child(currentUserId as! String).child(toUsreId as! String).child(key)
+                            let message = ["deliverd_status": Constant.encryptedKeys.deliveryStatus2] as [String:Any]
+                            MessageRef.updateChildValues(message)
+                            msgref.removeAllObservers()
+                            handler(true)
+                        }
+                    }else{
+                        handler(false)
+                    }
+                }
+            }else{
+                ////Update read flag in Message
+                let msgref = self.databaseMessages().child(currentUserId as! String).child(toUsreId as! String)
+                msgref.keepSynced(false)
+                msgref.observe(.value) { (snapshot) in
+                    if snapshot.exists() {
+                        let messageDict = snapshot.value as! [String: Any]
+                        for(key,_) in messageDict {
+                            let MessageRef = self.databaseMessages().child(currentUserId as! String).child(toUsreId as! String).child(key)
+                            let message = ["seen": true] as [String:Any]
 
+                            MessageRef.updateChildValues(message)
+                            //                    MessageRef.removeAllObservers()
+                            msgref.removeAllObservers()
+                            handler(true)
+                        }
+                    }else{
+                        handler(false)
+                    }
+                }
+            }
+        }
+    }
 //MARK:- Auth Services
     
 }

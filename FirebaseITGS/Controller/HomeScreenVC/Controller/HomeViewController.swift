@@ -770,20 +770,20 @@ extension HomeViewController: chatOptionDelegate {
 //
 //
             print("Mark as unread")
-////            guard let currentUserId =  UserDefaults.standard.value(forKey: "currentFireUserId") else {return}
-//            let currentUserId = Preferences.currentFireUserId ?? ""
+            guard let currentUserId =  UserDefaults.standard.value(forKey: "currentUserFireId") else {return}
+//            let currentUserId = UserDefaults.standard.value(forKey: "currentUserFireId") ?? ""
 //            if currentUserId == "" {
 //                return
 //            }
-//            guard let toUsreId =  UserDefaults.standard.value(forKey: "FirToUserId") else {return}
-//
-//            if userObj?.isgroup == true{
+            guard let toUsreId =  UserDefaults.standard.value(forKey: "FirToUserId") else {return}
+
+            if userObj?.isgroup == true{
 //                let messageListWithoutNotifiyMsg = self.allMessages.filter({$0.from_id != "notifyMsg"})
 //                //guard let loginUserID = UserDefaults.standard.value(forKey: "currentFireUserId") else{return}
-//                let loginUserID = Preferences.currentFireUserId ?? ""
-//                if loginUserID == "" {
-//                    return
-//                }
+//                let loginUserID = UserDefaults.standard.value(forKey: "currentUserFireId") ?? ""
+////                if loginUserID == "" {
+////                    return
+////                }
 //                let receivedMessageList = messageListWithoutNotifiyMsg.filter({$0.from_id != loginUserID as? String ?? ""})
 //                if receivedMessageList.count > 0{
 //                    self.firebaseService.markAsUnread(userObj: userObj, readFlag:false, seenCount:"1", comingFrom: "option", comingFromVc: "chatConversation"){ (success) in
@@ -792,37 +792,37 @@ extension HomeViewController: chatOptionDelegate {
 //                        }
 //                    }
 //                }
-//
-//                /*self.allMessages = []
-//                self.allMessagesKeyArr = []
-//                self.newChatConversationViewModel.loadAllMessagesGroups(){ (mesages,msgKey) in
-//                    self.allMessages = mesages
-//                    self.allMessagesKeyArr = msgKey
-//                    let messageListWithoutNotifiyMsg = self.allMessages.filter({$0.from_id != "notifyMsg"})
-//                    guard let loginUserID = UserDefaults.standard.value(forKey: "currentFireUserId") else{return}
-//                    let receivedMessageList = messageListWithoutNotifiyMsg.filter({$0.from_id != loginUserID as? String ?? ""})
-//                    if receivedMessageList.count > 0{
-//                        self.firebaseService.markAsUnread(userObj: userObj, readFlag:false, seenCount:"1", comingFrom: "option", comingFromVc: "chatConversation"){ (success) in
-//                            if success {
-//                                //                            self.loadChatConversation()
-//                            }
-//                        }
-//                    }
-//                }*/
-//            }else{
-//                let _ = firebaseService.databaseMessages().child(currentUserId as! String).child(toUsreId as! String).queryOrdered(byChild: "from_id").queryEqual(toValue: toUsreId).queryLimited(toLast: 1).observe(.childAdded){
-//                 (snapshot) in
-//                    self.firebaseService.markAsUnread(userObj: userObj, readFlag:false, seenCount:"1", comingFrom: "option", comingFromVc: "chatConversation"){ (success) in
-//                        if success {
-//                            //                            self.loadChatConversation()
-//                        }
-//                    }
+
+                /*self.allMessages = []
+                self.allMessagesKeyArr = []
+                self.newChatConversationViewModel.loadAllMessagesGroups(){ (mesages,msgKey) in
+                    self.allMessages = mesages
+                    self.allMessagesKeyArr = msgKey
+                    let messageListWithoutNotifiyMsg = self.allMessages.filter({$0.from_id != "notifyMsg"})
+                    guard let loginUserID = UserDefaults.standard.value(forKey: "currentFireUserId") else{return}
+                    let receivedMessageList = messageListWithoutNotifiyMsg.filter({$0.from_id != loginUserID as? String ?? ""})
+                    if receivedMessageList.count > 0{
+                        self.firebaseService.markAsUnread(userObj: userObj, readFlag:false, seenCount:"1", comingFrom: "option", comingFromVc: "chatConversation"){ (success) in
+                            if success {
+                                //                            self.loadChatConversation()
+                            }
+                        }
+                    }
+                }*/
+            }else{
+                let _ = firebaseService.databaseMessages().child(currentUserId as! String).child(toUsreId as! String).queryOrdered(byChild: "from_id").queryEqual(toValue: toUsreId).queryLimited(toLast: 1).observe(.childAdded){
+                 (snapshot) in
+                    self.firebaseService.markAsUnread(userObj: userObj, readFlag:false, seenCount:"1", comingFrom: "option", comingFromVc: "chatConversation"){ (success) in
+                        if success {
+                            self.loadChatConversation()
+                        }
+                    }
+                }
+
+//                self.newChatConversationViewModel.loadAllMessages(){ (mesages,msgKey) in
+//                    self.newChatConversationViewModel.messageRefSenderTest?.removeAllObservers()
 //                }
-//
-////                self.newChatConversationViewModel.loadAllMessages(){ (mesages,msgKey) in
-////                    self.newChatConversationViewModel.messageRefSenderTest?.removeAllObservers()
-////                }
-//            }
+            }
             
             break
         case .archive:
