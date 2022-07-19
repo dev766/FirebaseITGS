@@ -39,6 +39,7 @@ class DropDownViewController: UIViewController {
         }
     }
     
+    //MARK:- LifeCycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         setNavigationBar()
@@ -46,7 +47,8 @@ class DropDownViewController: UIViewController {
         loadNib()
         loadUsers()
     }
-
+    
+    //MARK:- Business Logics
     func setNavigationBar() {
         let navItem = UINavigationItem(title: "Add People")
         doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
@@ -79,25 +81,11 @@ class DropDownViewController: UIViewController {
         }
     }
     
-    @objc func done() {
-        if selectedUser != nil && selectedUser?.isSelected ?? false {
-            guard let user = selectedUser else {
-                return
-            }
-            dropDownDelegate?.selectedUser(user: user)
-            self.dismiss(animated: true, completion: nil)
-        }
-    }
-    
-    @objc func backButtonPressed() {
-        self.dismiss(animated: true, completion: nil)
-    }
-    
     func setUpNewChatMemberCell(indexPath: IndexPath, userData: [User]) ->  UITableViewCell {
         guard let cell = listTableView.dequeueReusableCell(withIdentifier: "NewChatMemberCell", for: indexPath) as? NewChatMemberTableViewCell else {return UITableViewCell()}
         
         cell.selectionStyle = .none
-
+        
         DispatchQueue.main.async {
             cell.checkUncheckImageView.image = UIImage(named: "CircleUnselect")
         }
@@ -123,8 +111,22 @@ class DropDownViewController: UIViewController {
         cell.setupCell(chatUser: model)
         return cell
     }
-
-
+    
+    //MARK:- Actions
+    @objc func done() {
+        if selectedUser != nil && selectedUser?.isSelected ?? false {
+            guard let user = selectedUser else {
+                return
+            }
+            dropDownDelegate?.selectedUser(user: user)
+            self.dismiss(animated: true, completion: nil)
+        }
+    }
+    
+    @objc func backButtonPressed() {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
 }
 
 //MARK:- SearchBar Delegate Methods
@@ -178,9 +180,10 @@ extension DropDownViewController: UISearchBarDelegate {
             self.listTableView.reloadData()
         }
     }
-
+    
 }
 
+//MARK:- TableView Delegate Methods
 extension DropDownViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -194,7 +197,7 @@ extension DropDownViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var userslist: [User] = []
         if isSearch {
-           userslist = searchFilterData
+            userslist = searchFilterData
         }else {
             userslist = chatfilteredData
         }
@@ -209,7 +212,7 @@ extension DropDownViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         var userslist: [User] = []
         if isSearch {
-           userslist = searchFilterData
+            userslist = searchFilterData
         }else {
             userslist = chatfilteredData
         }
@@ -224,11 +227,11 @@ extension DropDownViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         var userslist: [User] = []
         if isSearch {
-           userslist = searchFilterData
+            userslist = searchFilterData
         }else {
             userslist = chatfilteredData
         }
-
+        
         userslist[indexPath.row].isSelected = false
         selectedUser = userslist[indexPath.row]
         DispatchQueue.main.async {

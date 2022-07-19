@@ -88,7 +88,11 @@ class SenderCellTableViewCell: UITableViewCell {
             messageLabel.text = message + "                   "
         }
                 
-        
+        let longPressGesture:UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(self.handleLongPress(_:)))
+        longPressGesture.minimumPressDuration = 0.5
+        longPressGesture.delegate = self
+        self.backShadowView.addGestureRecognizer(longPressGesture)
+
         guard let time = dataObj.timeStamp else {return}
         guard let timeStampStr:String? = time.stringValue else {return}
         
@@ -161,6 +165,15 @@ class SenderCellTableViewCell: UITableViewCell {
                 self.sentStatusImgView.image = UIImage(named: "readMsg")
             }else if dataObj.deliverd_status ?? "" == "4"{
                 self.sentStatusImgView.image = UIImage(named: "deliveredMsg")
+            }
+        }
+    }
+    
+    @objc func handleLongPress(_ longPressGestureRecognizer: UILongPressGestureRecognizer) {
+        if longPressGestureRecognizer.state == UIGestureRecognizer.State.began {
+            if viewController != nil{
+                
+                viewController?.onLongPress(existMsg:self.dataObj, editDeleteIndexPath: self.cellIndex, IndexPath: self.currentIndexPath)
             }
         }
     }

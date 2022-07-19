@@ -221,6 +221,8 @@ class NewChatConversationViewController:UIViewController {
         messageDeleteBtn.setTitle("Delete", for: .normal)
 
         self.messageOptionBlurView.isUserInteractionEnabled = true
+        self.messageOptionBlurView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.messageOptionBlurViewTapped)))
+
         NotificationCenter.default.addObserver(self, selector:
         #selector(hideSuggestedView), name: NSNotification.Name("hideSuggestedView"), object: nil)
         
@@ -379,6 +381,7 @@ class NewChatConversationViewController:UIViewController {
             }
         }
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
       
@@ -1040,7 +1043,20 @@ class NewChatConversationViewController:UIViewController {
         self.MessageOptionBackView.isHidden = true
     }
     @IBAction func messageDeleteBtnClicked(_ sender: Any) {
-        
+        self.isEditMessage = true
+
+        if self.existingMessage != nil{
+            if isFromNewGroupChat ?? false || isGroupConversation ?? false || self.userObj?.isgroup ?? false{
+                newChatConversationViewModel.editMessageForGroup(allMentionedUUIDArrary:[], groupMember:self.groupMembers, msgToSend: "", existingMsg:self.existingMessage!, isEdit:false, lastMsgKeyFromChatTable:self.userObj?.message_key ?? "")
+            }else{
+                newChatConversationViewModel.editMessage(msgToSend:"", existingMsg:self.existingMessage!, isEdit:false, lastMsgKeyFromChatTable: self.userObj?.message_key ?? "")
+            }
+            self.messageOptionBlurView.isHidden = true
+            self.MessageOptionBackView.isHidden = true
+        }else{
+            print("error in deleteing message")
+        }
+        self.resetMessageTextView()
     }
     
     
@@ -1122,6 +1138,63 @@ class NewChatConversationViewController:UIViewController {
         self.messageOptionBlurView.isHidden = true
         self.MessageOptionBackView.isHidden = true
     }
+    
+    //MARK: - Long press on message to edit or delete
+    
+    @objc func messageOptionBlurViewTapped() {
+        self.messageOptionBlurView.isHidden = true
+        self.MessageOptionBackView.isHidden = true
+    }
+        
+    func onLongPress(existMsg:Message, editDeleteIndexPath: Int, IndexPath: IndexPath){
+        
+        if !(self.userObj?.isremoved ?? false) {
+            self.existingMessage = existMsg
+            self.editDeleteIndexPath = editDeleteIndexPath
+            let currentUserFireId = UserDefaults.standard.value(forKey: Constant.UserDefaultKeys.cuurentFirId) as? String
+            if self.existingMessage?.from_id != "notifyMsg" {
+                let rect = self.chatListTableView.rectForRow(at: IndexPath)
+                var point = CGPoint(x: rect.midX, y: rect.midY)
+                point = self.chatListTableView.convert(point, to: nil)
+                
+                if self.view.frame.size.height / 2 < point.y{
+                    point.y = point.y - 200
+                }
+                self.MessageOptionBackView.frame = CGRect(x: point.x, y: point.y, width: self.MessageOptionBackView.frame.size.width, height: self.MessageOptionBackView.frame.size.height)
+                
+                
+                if self.existingMessage?.message_type == "0" || self.existingMessage?.message_type == "text" || self.existingMessage?.from_id != currentUserFireId{
+                    self.messageEditBtn.isHidden = false
+                    self.messageOptionLineView.isHidden = false
+                }else{
+                    self.messageEditBtn.isHidden = true
+                    self.messageOptionLineView.isHidden = true
+                }
+                self.messageOptionBlurView.isHidden = false
+                self.MessageOptionBackView.isHidden = false
+            }
+        }
+    }
+    
+    // long press to meeting view when single meeting
+        @objc func handleLongPress(gestureRecognizer: UILongPressGestureRecognizer, IndexPath: IndexPath){
+            if gestureRecognizer.state == .began {
+                
+                let rect = self.chatListTableView.rectForRow(at: IndexPath)
+                var point = CGPoint(x: rect.midX, y: rect.midY)
+                point = self.chatListTableView.convert(point, to: nil)
+
+                self.messageOptionBlurView.isHidden = false
+                self.MessageOptionBackView.isHidden = false
+                
+                if self.view.frame.size.height / 2 < point.y{
+                    point.y = point.y - 200 //self.view.frame.size.height / 2
+                }
+                self.MessageOptionBackView.frame = CGRect(x: point.x, y: point.y, width: self.MessageOptionBackView.frame.size.width, height: self.MessageOptionBackView.frame.size.height)
+                
+            }
+        }
+
 } //END of class
 
 extension Int64 {
